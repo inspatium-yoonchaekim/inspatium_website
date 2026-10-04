@@ -130,7 +130,7 @@ function Research({ lang, id }) {
     if (!project) return <NotFound lang={lang} />;
     const people = data.people.filter((person) => project.people.includes(person.id));
     const paper = data.publications.find((item) => item.id === project.publication);
-    const resultLabel = project.publication ? t('연구 성과', 'Results') : project.status === '연구 계획' ? t('연구 계획', 'Research plan') : t('현재 연구', 'Current work');
+    const resultLabel = project.publication || project.status === '연구 성과' ? t('연구 성과', 'Results') : project.status === '연구 계획' ? t('연구 계획', 'Research plan') : t('현재 연구', 'Current work');
     return <>
       <PageHeading lang={lang} title={field(project, 'title', lang)} lead={field(project, 'summary', lang)} category={t('연구', 'Research')} parent="research" />
       <section className="section wrap project-detail">
@@ -169,7 +169,7 @@ function Publications({ lang, id }) {
       </article><div className="back-navigation"><TextLink to={path(lang, 'publications')} back>{t('전체 논문 보기', 'All publications')}</TextLink></div></section>
     </>;
   }
-  return <><PageHeading lang={lang} title={t('논문', 'Publications')} lead={t('인스파티움의 연구 성과를 학술논문으로 소개합니다.', 'Academic publications from Inspatium’s research.')} /><section className="section wrap"><div className="publications-list">{data.publications.map((paper) => <PublicationRow key={paper.id} paper={paper} lang={lang} />)}</div></section></>;
+  return <><PageHeading lang={lang} title={t('논문', 'Publications')} lead={t('인스파티움의 연구 성과를 학술논문으로 소개합니다.', 'Academic publications from Inspatium’s research.')} /><section className="section wrap">{data.publications.length ? <div className="publications-list">{data.publications.map((paper) => <PublicationRow key={paper.id} paper={paper} lang={lang} />)}</div> : <div className="publications-empty inner-news-empty"><span className="empty-rule" aria-hidden="true" /><h2>{t('현재 공개된 논문이 없습니다.', 'No publications are currently available.')}</h2><p>{t('공개 가능한 논문을 이곳에서 소개하겠습니다.', 'Publications will be shared here when available.')}</p></div>}</section></>;
 }
 
 function MemberContact({ person, lang }) {

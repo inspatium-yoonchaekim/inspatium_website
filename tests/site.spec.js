@@ -1,13 +1,17 @@
 import { test, expect } from '@playwright/test';
 import { mkdir, readFile } from 'node:fs/promises';
 
+const content = JSON.parse(await readFile(new URL('../src/content.json', import.meta.url), 'utf8'));
+const publicPublications = content.publications.filter(paper => paper.visibility !== 'hidden');
+const publicationRoutes = publicPublications.map(paper => `/publications/${paper.id}`);
+
 const memberEmails = {
   'sungjun-choi': ['sjchol@inspatium.co', 'tonggyegang@korea.ac.kr'],
   'woojin-an': ['anwoojin@inspatium.co', 'anwoojin@korea.ac.kr'],
   'yoonchae-kim': ['yonchaekim@inspatium.co', 'yonchaekim@ajou.ac.kr'],
   'yoonseo-gu': ['yunseo7560@inspatium.co', 'gys0821@korea.ac.kr'],
 };
-const pages = ['', '/philosophy', '/greeting', '/about', '/history', '/research', '/research/few-shot-inverse-design', '/research/embedded-physical-ai', '/research/holography-hardware', '/publications', '/publications/hat-2026', '/team', ...Object.keys(memberEmails).map(id => `/team/${id}`), '/join', '/news', '/contact'];
+const pages = ['', '/philosophy', '/greeting', '/about', '/history', '/research', '/research/few-shot-inverse-design', '/research/embedded-physical-ai', '/research/holography-hardware', '/publications', ...publicationRoutes, '/team', ...Object.keys(memberEmails).map(id => `/team/${id}`), '/join', '/news', '/contact'];
 
 for (const lang of ['ko', 'en']) {
   test(`${lang}: all pages load without runtime errors or horizontal overflow`, async ({ page }) => {
@@ -58,11 +62,11 @@ test('language switching preserves the research detail route and member anchor',
 });
 
 test('research visibility controls links and direct routes while preserving other pages', async ({ page }) => {
-  const content = JSON.parse(await readFile(new URL('../src/content.json', import.meta.url), 'utf8'));
   const projectId = 'acoustic-optimization';
   const project = content.projects.find(item => item.id === projectId);
   const hidden = project.visibility === 'hidden';
   const publicIds = content.projects.filter(item => item.visibility !== 'hidden').map(item => item.id);
+  const relatedPublicationRoutes = new Set(publicPublications.filter(paper => paper.project === projectId).map(paper => `publications/${paper.id}`));
   for (const lang of ['ko', 'en']) {
     const projectField = key => lang === 'en' ? project[`${key}_en`] ?? project[key] : project[key];
     await page.goto(`/${lang}/research`);
@@ -72,18 +76,15 @@ test('research visibility controls links and direct routes while preserving othe
       await expect(page.locator(`main a[href="/${lang}/research/${id}"]`).first()).toBeVisible();
     }
 
-    for (const route of ['history', 'news', 'publications', 'publications/hat-2026', 'team', ...Object.keys(memberEmails).map(id => `team/${id}`)]) {
+    for (const route of ['history', 'news', 'publications', ...publicationRoutes.map(route => route.slice(1)), 'team', ...Object.keys(memberEmails).map(id => `team/${id}`)]) {
       await page.goto(`/${lang}/${route}`);
       await expect(page.locator('h1')).toBeVisible();
       await expect(page.locator('main')).not.toContainText('404');
       if (hidden) {
         await expect(page.locator(`main a[href*="/research/${projectId}"]`)).toHaveCount(0);
         await expect(page.locator('main')).not.toContainText('7.86');
-      } else if (route === 'history' || route === 'publications/hat-2026' || (route.startsWith('team/') && project.people.includes(route.slice('team/'.length)))) {
+      } else if (route === 'history' || relatedPublicationRoutes.has(route) || (route.startsWith('team/') && project.people.includes(route.slice('team/'.length)))) {
         await expect(page.locator(`main a[href="/${lang}/research/${projectId}"]`).first()).toBeVisible();
-      }
-      if (route === 'publications/hat-2026') {
-        await expect(page.locator('.publication-detail-title')).toContainText(lang === 'ko' ? '홀로그래피 음향 집게' : 'holographic acoustic tweezers');
       }
     }
 
@@ -114,6 +115,89 @@ test('research visibility controls links and direct routes while preserving othe
       await assertDetailVisibility();
       await page.reload();
       await assertDetailVisibility();
+    }
+  }
+});
+
+test('publication visibility controls listings, related links and direct routes while retaining the index', async ({ page }) => {
+  const publicProjects = content.projects.filter(project => project.visibility !== 'hidden');
+  const incomingRoutes = ['', '/history', '/news', '/research', ...publicProjects.map(project => `/research/${project.id}`), '/team', ...Object.keys(memberEmails).map(id => `/team/${id}`)];
+  const hiddenPapers = content.publications.filter(paper => paper.visibility === 'hidden');
+  for (const lang of ['ko', 'en']) {
+    const localized = (item, key) => lang === 'en' ? item[`${key}_en`] ?? item[key] : item[key];
+    const indexPath = `/${lang}/publications`;
+    for (const width of [1440, 390]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.goto(`/${lang}`);
+      if (width === 390) await page.getByRole('button', { name: lang === 'ko' ? '메뉴 열기' : 'Open menu' }).click();
+      await page.locator('#main-navigation').getByRole('link', { name: lang === 'ko' ? '논문' : 'Publications', exact: true }).click();
+      await expect(page).toHaveURL(indexPath);
+      await expect(page.locator('h1')).toHaveText(lang === 'ko' ? '논문' : 'Publications');
+      await expect(page.locator('.publications-list .publication-row')).toHaveCount(publicPublications.length);
+      if (publicPublications.length === 0) {
+        await expect(page.locator('.publications-empty h2')).toHaveText(lang === 'ko' ? '현재 공개된 논문이 없습니다.' : 'No publications are currently available.');
+      } else {
+        await expect(page.locator('.publications-empty')).toHaveCount(0);
+      }
+      for (const paper of content.publications) {
+        const link = page.locator(`main a[href="${indexPath}/${paper.id}"]`).first();
+        if (paper.visibility === 'hidden') {
+          await expect(link).toHaveCount(0);
+          await expect(page.locator('main')).not.toContainText(localized(paper, 'title'));
+        } else {
+          await expect(link).toHaveText(localized(paper, 'title'));
+          await expect(link).toBeVisible();
+        }
+      }
+    }
+
+    for (const route of incomingRoutes) {
+      await page.goto(`/${lang}${route}`);
+      for (const paper of hiddenPapers) {
+        await expect(page.locator(`main a[href*="/publications/${paper.id}"]`)).toHaveCount(0);
+      }
+      const project = publicProjects.find(item => route === `/research/${item.id}`);
+      if (project) {
+        const linkedPaper = publicPublications.find(paper => paper.id === project.publication);
+        await expect(page.locator('.related-publication')).toHaveCount(linkedPaper ? 1 : 0);
+        if (linkedPaper) await expect(page.locator(`.related-publication a[href="${indexPath}/${linkedPaper.id}"]`).first()).toBeVisible();
+      }
+    }
+
+    for (const paper of content.publications) {
+      const paperTitle = localized(paper, 'title');
+      const assertDetailVisibility = async () => {
+        await expect(page.locator('html')).toHaveAttribute('lang', lang);
+        if (paper.visibility === 'hidden') {
+          await expect(page.locator('h1')).toHaveText(lang === 'ko' ? '페이지를 찾을 수 없습니다.' : 'Page not found.');
+          await expect(page.locator('.publication-detail')).toHaveCount(0);
+          for (const value of [paperTitle, paper.original_title, paper.venue, paper.date, localized(paper, 'author_note')].filter(Boolean)) {
+            await expect(page.locator('main')).not.toContainText(value);
+          }
+          await expect(page).not.toHaveTitle(`${paperTitle} | INSPATIUM`);
+          for (const selector of ['meta[property="og:title"]', 'meta[name="description"]', 'meta[property="og:description"]']) {
+            await expect(page.locator(selector)).not.toHaveAttribute('content', new RegExp(paperTitle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')));
+          }
+        } else {
+          await expect(page.locator('.publication-detail-title')).toHaveText(paperTitle);
+          await expect(page.locator('.publication-detail')).toContainText(paper.venue);
+          await expect(page.locator('.paper-status')).toContainText(paper.date);
+          await expect(page).toHaveTitle(`${paperTitle} | INSPATIUM`);
+          await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', `${paperTitle} | INSPATIUM`);
+          const project = publicProjects.find(item => item.id === paper.project);
+          await expect(page.locator('.project-band')).toHaveCount(project ? 1 : 0);
+          if (project) await expect(page.locator(`.project-band a[href="/${lang}/research/${project.id}"]`)).toBeVisible();
+          if (paper.public_release === false) await expect(page.locator('.publication-resources a')).toHaveCount(0);
+        }
+      };
+      const paperPath = `${indexPath}/${paper.id}`;
+      for (const suffix of ['', '?source=visibility-check', '/index.html?source=visibility-check']) {
+        await page.goto(`${paperPath}${suffix}`);
+        await expect(page).toHaveURL(`${paperPath}${suffix.replace('/index.html', '')}`);
+        await assertDetailVisibility();
+        await page.reload();
+        await assertDetailVisibility();
+      }
     }
   }
 });

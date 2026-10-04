@@ -206,6 +206,7 @@
   "publications": [
     {
       "id": "hat-2026",
+      "visibility": "hidden",
       "title": "홀로그래피 음향 집게의 실시간 최적화를 위한 목적함수 설계",
       "title_en": "Objective design for real-time optimization in holographic acoustic tweezers",
       "original_title": "Objective design for real-time optimization in holographic acoustic tweezers",
