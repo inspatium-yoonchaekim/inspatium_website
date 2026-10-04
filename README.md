@@ -97,15 +97,44 @@ npm run test:ui
 
 `npm test`는 Node 서버의 SPA 경로, 기존 데모 주소 호환, 파일 MIME와 내용, 없는 자산의 404, HEAD 요청, 허용하지 않는 HTTP 메서드, 상태 확인 API, 경로 이탈·Windows junction 차단, 비공개 소식·논문 링크의 번들 제외를 검사합니다.
 
-`npm run test:ui`는 설치된 Google Chrome으로 9개 UI 테스트를 실행합니다. 한국어·영어 각각 20개 경로(기존 16개와 구성원 프로필 4개)를 1440px·390px에서 확인하고, 홈은 768px·320px도 검사합니다. 화면 오류·가로 넘침, 홈 길이·글자 크기, 흑백 팔레트, 메뉴·언어 전환·구성원 프로필·소식 필터·제공받은 8개 메일 링크·404를 검사합니다. Chrome이 없는 환경에서는 Chrome을 설치하거나 `playwright.config.js`의 채널 설정을 변경합니다. 웹 테스트는 Node 서버를 자동 실행하며, 미리 빌드해야 합니다. 홈·구성원·연구의 확인용 전체 화면 이미지 8개는 `docs/previews/`에 저장합니다.
+`npm run test:ui`는 설치된 Google Chrome으로 10개 UI 테스트를 실행합니다. 한국어·영어 각각 20개 경로(기존 16개와 구성원 프로필 4개)를 1440px·390px에서 확인하고, 홈은 768px·320px도 검사합니다. 화면 오류·가로 넘침, 홈 길이·글자 크기, 흑백 팔레트, 메뉴·언어 전환·구성원 프로필·소식 필터·제공받은 8개 메일 링크·404를 검사합니다. 홈과 상세 페이지는 직접 접속·새로고침도 검사합니다. Chrome이 없는 환경에서는 Chrome을 설치하거나 `playwright.config.js`의 채널 설정을 변경합니다. 기본 웹 테스트는 Node 서버를 자동 실행하며, 미리 빌드해야 합니다. 홈·구성원·연구의 확인용 전체 화면 이미지 8개는 `docs/previews/`에 저장합니다.
 
 배포 전에는 모바일·데스크톱 화면, 한국어·영어 전환, 내부 페이지 새로고침, 이메일 링크와 공개되는 콘텐츠를 최종 확인합니다.
 
 ## 배포
 
+현재 운영 사이트는 **https://www.inspatium.co**이며 GitHub의 `main` 브랜치를 Vercel에 연결해 배포합니다. 프로젝트 루트의 `vercel.json`이 `/ko`, `/en`과 내부 페이지 요청을 `/index.html`로 rewrite하므로 주소를 직접 열거나 새로고침해도 React 화면이 실행됩니다. 기존 언어별 `index.html` 주소도 연결합니다. `/assets/`, `/api/`와 일반 파일 요청은 페이지 rewrite에서 제외합니다. 이 설정은 [Vercel의 Vite SPA 배포 안내](https://vercel.com/docs/frameworks/frontend/vite#using-vite-to-make-spas)에 따라 적용했습니다.
+
+Vercel 프로젝트는 Framework Preset을 **Vite**, Build Command를 **`npm run build`**, Output Directory를 **`dist`**로 설정합니다. GitHub에 push한 뒤 Vercel 배포가 **Ready**가 되면 `/ko`, `/en`과 내부 페이지에서 직접 접속·새로고침을 확인합니다. Vercel 정적 배포에서는 `npm start`의 Node 서버를 실행하지 않습니다.
+
+실제 배포의 rewrite를 브라우저로 검사하려면 다음 명령을 실행합니다. `PLAYWRIGHT_BASE_URL`을 지정하면 로컬 서버 대신 해당 사이트를 검사합니다.
+
+```powershell
+$env:PLAYWRIGHT_BASE_URL = 'https://www.inspatium.co'
+npm.cmd run test:ui -- --grep 'locale home and detail pages survive direct navigation and refresh'
+Remove-Item Env:PLAYWRIGHT_BASE_URL
+```
+
 정적 호스팅 환경에는 `npm ci` 후 `npm run build`로 만든 `dist/`의 내용을 배포합니다. 호스팅 서비스의 SPA rewrite 설정에서 페이지 경로를 `index.html`로 연결해야 합니다. 존재하지 않는 정적 자산까지 HTML을 반환하지 않도록 호스팅 규칙을 확인합니다. 정적 호스팅만 사용할 경우 `/api/health`는 제공되지 않습니다.
 
 Node.js 호스팅 환경에는 소스와 잠금 파일을 배포하고 `npm ci`, `npm run build`, `npm start` 순서로 실행합니다. 공개 도메인과 HTTPS는 선택한 호스팅 또는 리버스 프록시에서 설정합니다. 서버 프로세스 재시작·로그 관리 방식과 배포 담당자는 납품 전에 정합니다. 이 초안에는 배포 계정이나 운영 비밀값이 들어 있지 않습니다.
+
+## GitHub에 변경 사항 올리기
+
+이 저장소의 원격은 `https://github.com/inspatium-yoonchaekim/inspatium_website.git`이고 작업 브랜치는 `main`입니다. Collaborator도 쓰기 권한이 있으면 자신의 GitHub 계정으로 push할 수 있습니다. 프로젝트 폴더에서 작업을 시작하기 전에 `git pull --ff-only origin main`으로 최신 내용을 받습니다.
+
+수정 후 아래 순서로 확인하고 올립니다. `git add`에는 실제로 변경한 파일 경로를 지정합니다.
+
+```powershell
+git status
+npm.cmd test
+npm.cmd run build
+git add vercel.json README.md playwright.config.js server/static-server.test.mjs tests/site.spec.js
+git commit -m "Fix Vercel locale page refresh"
+git push origin main
+```
+
+처음 push할 때 로그인 창이 열리면 Collaborator로 등록된 자신의 GitHub 계정으로 로그인합니다. 원격 변경 때문에 push가 거절되면 `git pull --rebase origin main`으로 변경을 합치고 충돌이 있으면 해결한 뒤 검증과 push를 다시 실행합니다. GitHub 업로드가 끝나면 연결된 Vercel 프로젝트가 새 커밋을 자동 배포합니다.
 
 ## 초안에서 확인할 사항
 

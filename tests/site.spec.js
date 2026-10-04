@@ -30,6 +30,22 @@ for (const lang of ['ko', 'en']) {
   });
 }
 
+test('locale home and detail pages survive direct navigation and refresh', async ({ page }) => {
+  for (const lang of ['ko', 'en']) {
+    for (const route of ['', '/team/sungjun-choi', '/research/acoustic-optimization']) {
+      const path = `/${lang}${route}?source=refresh`;
+      const response = await page.goto(path);
+      expect(response.status(), path).toBe(200);
+      const heading = await page.locator('h1').textContent();
+      const reloaded = await page.reload();
+      expect(reloaded.status(), path).toBe(200);
+      await expect(page).toHaveURL(new RegExp(`${path.replace('?', '\\?')}$`));
+      await expect(page.locator('h1')).toHaveText(heading);
+      await expect(page.locator('html')).toHaveAttribute('lang', lang);
+    }
+  }
+});
+
 test('language switching preserves the research detail route and member anchor', async ({ page }) => {
   await page.goto('/ko/research/acoustic-optimization');
   await page.getByRole('link', { name: 'Switch to English' }).click();

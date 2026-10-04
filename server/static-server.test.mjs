@@ -55,7 +55,7 @@ function call(path, { method = 'GET', headers = {} } = {}) {
 }
 
 test('serves the React entry and client routes, including a query string', async () => {
-  for (const path of ['/', '/company', '/technology/?lang=en']) {
+  for (const path of ['/', '/ko', '/ko/', '/en', '/en/', '/ko/team', '/en/research/acoustic-optimization?source=refresh', '/company', '/technology/?lang=en']) {
     const response = await call(path, { headers: { accept: 'text/html' } });
     assert.equal(response.status, 200);
     assert.equal(response.body, indexContent);
