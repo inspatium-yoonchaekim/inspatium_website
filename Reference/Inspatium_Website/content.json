@@ -1,0 +1,344 @@
+{
+  "site": {
+    "name": "인스파티움",
+    "name_en": "Inspatium",
+    "founded": "2025",
+    "email": "sjchoi@inspatium.co",
+    "kakao": "",
+    "hardware_image": "",
+    "hardware_caption": "홀로그래피 실험 장비",
+    "hardware_caption_en": "Holography experimental hardware"
+  },
+  "people": [
+    {
+      "id": "sungjun-choi",
+      "name": "최성준",
+      "name_en": "SungJun Choi",
+      "role": "리드 연구자 · 기초과학",
+      "role_en": "Lead Researcher · Fundamental Science",
+      "initials": "SC",
+      "photo": "",
+      "email": "sjchoi@inspatium.co",
+      "kakao": "",
+      "intro": "인스파티움의 연구 방향을 이끌며, 수학과 물리학을 바탕으로 역설계와 계산 방법을 연구합니다.",
+      "intro_en": "Leads Inspatium’s research direction, investigating inverse design and computational methods grounded in mathematics and physics.",
+      "interests": [
+        "수리물리",
+        "역설계",
+        "기초과학"
+      ],
+      "interests_en": [
+        "Mathematical physics",
+        "Inverse design",
+        "Fundamental science"
+      ]
+    },
+    {
+      "id": "yoonchae-kim",
+      "name": "김윤채",
+      "name_en": "Yoonchae Kim",
+      "role": "수리 · 과학 AI 엔지니어링",
+      "role_en": "Mathematical & Scientific ML Engineering",
+      "initials": "YK",
+      "photo": "",
+      "email": "",
+      "kakao": "",
+      "intro": "물리 문제의 수학적 표현과 과학 AI 모델의 구현을 담당합니다.",
+      "intro_en": "Works on mathematical formulations of physical problems and the implementation of scientific machine learning models.",
+      "interests": [
+        "수학적 모델링",
+        "과학 AI",
+        "계산 방법"
+      ],
+      "interests_en": [
+        "Mathematical modeling",
+        "Scientific machine learning",
+        "Computational methods"
+      ]
+    },
+    {
+      "id": "yoonseo-gu",
+      "name": "구윤서",
+      "name_en": "Yoonseo Gu",
+      "role": "데이터 과학",
+      "role_en": "Data Science",
+      "initials": "YG",
+      "photo": "",
+      "email": "",
+      "kakao": "",
+      "intro": "연구에 필요한 데이터를 구성하고 분석하며, 데이터에서 물리적 관계를 학습하는 방법을 연구합니다.",
+      "intro_en": "Builds and analyzes research datasets and investigates methods for learning physical relationships from data.",
+      "interests": [
+        "연구 데이터",
+        "데이터 분석",
+        "데이터 기반 과학"
+      ],
+      "interests_en": [
+        "Research datasets",
+        "Data analysis",
+        "Data-driven science"
+      ]
+    },
+    {
+      "id": "woojin-an",
+      "name": "안우진",
+      "name_en": "Woojin An",
+      "role": "하드웨어 · 장치 엔지니어링",
+      "role_en": "Hardware & Device Engineering",
+      "initials": "WA",
+      "photo": "",
+      "email": "",
+      "kakao": "",
+      "intro": "계산한 결과를 실제 장치에서 구현하기 위한 하드웨어와 실험 체계를 개발합니다.",
+      "intro_en": "Develops the hardware and experimental systems needed to implement computational results in physical devices.",
+      "interests": [
+        "구동 장치",
+        "실험 하드웨어",
+        "계측과 제어"
+      ],
+      "interests_en": [
+        "Device drivers",
+        "Experimental hardware",
+        "Measurement and control"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "id": "acoustic-optimization",
+      "number": "01",
+      "title": "음향 홀로그래피의 실시간급 최적화",
+      "title_en": "Real-time optimization for acoustic holography",
+      "category": "음향 · 실시간 계산",
+      "category_en": "Acoustics · Real-time computation",
+      "status": "연구 성과",
+      "status_en": "Research result",
+      "summary": "소리로 작은 물체를 붙잡고 움직이기 위해, 제어에 필요한 계산을 빠르고 정밀하게 수행하는 방법을 연구합니다.",
+      "summary_en": "Developing fast, precise computation for the commands needed to trap and manipulate small objects with sound.",
+      "question": "소리로 물체를 안정적으로 붙잡는 방법을 실시간에 가까운 속도로 계산할 수 있을까요?",
+      "question_en": "Can commands for stable acoustic trapping be computed at near-real-time speeds?",
+      "approach": "물체에 작용하는 힘을 계산에 직접 반영하고, 같은 계산을 효율적으로 수행하도록 방법을 정리했습니다. 계산 속도와 함께 물체가 붙잡히는 위치와 안정성을 비교했습니다.",
+      "approach_en": "The method directly reflects forces on the trapped object and reorganizes their evaluation for efficient computation. The study compares calculation speed alongside trapping position and stability.",
+      "outcome": "단일 물체의 제어 명령을 CPU에서 7.86밀리초에 계산했습니다. 같은 조건에서 기존 방법은 28.96초가 걸렸습니다. 별도의 물리 모델로 힘과 안정성을 검증한 전산 연구입니다.",
+      "outcome_en": "A single-object command was computed in 7.86 ms on a CPU, compared with 28.96 s for the conventional method under the same protocol. This computational study checked force and stability using a separate physical model.",
+      "next": "후속 연구에서는 계산 방법을 데이터 기반 역설계와 실제 장치의 제어로 확장합니다.",
+      "next_en": "Follow-up work explores data-driven inverse design and control on physical hardware.",
+      "people": [
+        "sungjun-choi",
+        "yoonchae-kim",
+        "yoonseo-gu",
+        "woojin-an"
+      ],
+      "publication": "hat-2026"
+    },
+    {
+      "id": "few-shot-inverse-design",
+      "number": "02",
+      "title": "소수 데이터 기반 역설계",
+      "title_en": "Few-shot inverse design",
+      "category": "역설계 · 데이터 기반 과학",
+      "category_en": "Inverse design · Data-driven science",
+      "status": "연구 중",
+      "status_en": "In progress",
+      "summary": "적은 수의 계산과 실험에서 배운 내용을 활용해, 새로운 목표에 맞는 답을 찾는 방법을 연구합니다.",
+      "summary_en": "Learning from a small number of computations and experiments to find solutions for new targets.",
+      "question": "많은 데이터를 새로 만들지 않고도, 새로운 목표에 맞는 설계와 제어 방법을 찾을 수 있을까요?",
+      "question_en": "Can we find designs and control commands for new targets without generating a large new dataset?",
+      "approach": "물리 법칙과 해가 이루는 구조를 이해하고, 그 안에서 학습해야 할 관계를 찾습니다. 수학적 이해를 바탕으로 필요한 데이터와 계산을 줄이는 방향을 연구합니다.",
+      "approach_en": "We study physical laws and the structure of solution families to identify what must be learned. Mathematical understanding guides our efforts to reduce data and computational requirements.",
+      "outcome": "새로운 목표에 빠르게 대응할 수 있는 역설계 방법을 개발하고 있습니다.",
+      "outcome_en": "We are developing inverse-design methods that can respond efficiently to new targets.",
+      "next": "음향과 광학 문제에서 학습에 필요한 데이터와 적용 범위를 살펴봅니다.",
+      "next_en": "The work examines data requirements and applicability in acoustic and optical problems.",
+      "people": [],
+      "publication": null
+    },
+    {
+      "id": "embedded-physical-ai",
+      "number": "03",
+      "title": "DPU·SoC 기반 피지컬 AI 제어 시스템",
+      "title_en": "DPU/SoC-based physical AI control systems",
+      "category": "하드웨어 · 피지컬 AI 제어",
+      "category_en": "Hardware · Physical AI control",
+      "status": "연구 계획",
+      "status_en": "Planned research",
+      "summary": "피지컬 AI 제어 시스템을 DPU·SoC에 탑재해, 실제 장치 안에서 역설계와 제어를 수행하는 기술을 연구합니다.",
+      "summary_en": "Investigating how to embed physical AI control systems in DPU/SoC hardware, bringing inverse design and control into physical devices.",
+      "question": "역설계 AI가 계산한 제어 방법을 장치 내부에서 바로 실행하려면 어떤 하드웨어가 필요할까요?",
+      "question_en": "What hardware is needed to execute AI-based inverse-design and control methods directly inside a device?",
+      "approach": "AI의 계산과 장치 제어가 하나의 하드웨어 안에서 이어지도록, DPU·SoC에 제어 시스템을 탑재하는 방법을 연구할 계획입니다.",
+      "approach_en": "We plan to study how control systems can be embedded in DPU/SoC hardware, connecting AI computation with device control.",
+      "outcome": "제어에 필요한 계산을 하드웨어로 옮기는 구조를 후속 연구 주제로 준비하고 있습니다.",
+      "outcome_en": "We are preparing a research direction focused on moving control computation into hardware.",
+      "next": "하드웨어 구성과 제어 시스템의 탑재 방법을 검토하고, 홀로그래피 실험 장치와 연동하는 방향으로 연구를 진행할 계획입니다.",
+      "next_en": "Planned work will examine hardware architectures and control-system integration, with a view to connecting them to holography experiments.",
+      "people": [],
+      "publication": null
+    },
+    {
+      "id": "holography-hardware",
+      "number": "04",
+      "title": "홀로그래피 실험 체계 구축",
+      "title_en": "Holography experimental hardware",
+      "category": "실험 장비 · 실물 제어",
+      "category_en": "Experimental systems · Physical control",
+      "status": "구축 중",
+      "status_en": "Under development",
+      "summary": "계산한 제어 방법을 실제 장치에서 구현하고 확인할 수 있도록, 홀로그래피 실험 하드웨어를 구축합니다.",
+      "summary_en": "Building holography hardware to implement and evaluate computed control methods on physical devices.",
+      "question": "컴퓨터에서 찾은 제어 방법을 실제 장치에서도 구현할 수 있을까요?",
+      "question_en": "Can the control methods found in computation be implemented on physical devices?",
+      "approach": "구동 장치와 계측 환경을 연결하고, 계산부터 실험까지 이어지는 체계를 구축합니다.",
+      "approach_en": "We connect drive electronics and measurement equipment into a system that links computation with experiments.",
+      "outcome": "홀로그래피 연구를 위한 실험 하드웨어 체계를 구축하고 있습니다.",
+      "outcome_en": "An experimental hardware system for holography research is being developed.",
+      "next": "장치의 동작을 확인하고 제어 방법을 실험 환경에 적용합니다.",
+      "next_en": "Next steps verify device operation and apply control methods in the experimental setup.",
+      "people": [],
+      "publication": null
+    }
+  ],
+  "publications": [
+    {
+      "id": "hat-2026",
+      "title": "홀로그래피 음향 집게의 실시간 최적화를 위한 목적함수 설계",
+      "title_en": "Objective design for real-time optimization in holographic acoustic tweezers",
+      "original_title": "Objective design for real-time optimization in holographic acoustic tweezers",
+      "venue": "Results in Engineering",
+      "year": "2026",
+      "status": "게재 승인",
+      "status_en": "Accepted",
+      "date": "2026-09-29",
+      "authors": [],
+      "author_note": "최성준 외 · 전체 저자 표기 등록 예정",
+      "author_note_en": "SungJun Choi et al. · Full author list to be added",
+      "project": "acoustic-optimization",
+      "doi": "",
+      "url": "",
+      "code_url": "",
+      "public_release": false
+    }
+  ],
+  "news": [],
+  "history": [
+    {
+      "year": "2025",
+      "date": "2025",
+      "title": "인스파티움 출범",
+      "title_en": "Inspatium founded",
+      "body": "독립 연구팀으로 출발해 수학과 물리학을 바탕으로 한 계산 기술 연구를 시작했습니다.",
+      "body_en": "Established as an independent research team to investigate computational methods grounded in mathematics and physics.",
+      "status": "출범",
+      "status_en": "Founded",
+      "project": null
+    },
+    {
+      "year": "2026",
+      "date": "2026.10",
+      "title": "음향 홀로그래피 실시간급 최적화 연구",
+      "title_en": "Near-real-time optimization for acoustic holography",
+      "body": "물체에 작용하는 힘을 반영해 제어 명령을 빠르게 계산하는 연구 성과를 정리했습니다.",
+      "body_en": "Research on fast control-command computation that directly reflects forces on trapped objects.",
+      "status": "연구 성과",
+      "status_en": "Research result",
+      "project": "acoustic-optimization"
+    },
+    {
+      "year": "다음 단계",
+      "year_en": "Next",
+      "date": "후속 연구",
+      "date_en": "Ongoing research",
+      "title": "소수 데이터 기반 역설계",
+      "title_en": "Few-shot inverse design",
+      "body": "적은 데이터로 새로운 목표에 대응하는 계산 방법을 연구합니다.",
+      "body_en": "Developing methods that adapt to new targets with limited data.",
+      "status": "연구 중",
+      "status_en": "In progress",
+      "project": "few-shot-inverse-design"
+    },
+    {
+      "year": "다음 단계",
+      "year_en": "Next",
+      "date": "후속 연구",
+      "date_en": "Planned research",
+      "title": "DPU·SoC 기반 피지컬 AI 제어 시스템",
+      "title_en": "DPU/SoC-based physical AI control systems",
+      "body": "피지컬 AI 제어 시스템을 DPU·SoC에 탑재하고, 실제 장치의 제어로 연결하는 후속 연구를 준비합니다.",
+      "body_en": "Preparing research on embedding physical AI control systems in DPU/SoC hardware and connecting them to physical-device control.",
+      "status": "연구 계획",
+      "status_en": "Planned research",
+      "project": "embedded-physical-ai"
+    },
+    {
+      "year": "다음 단계",
+      "year_en": "Next",
+      "date": "실험 기반",
+      "date_en": "Experimental infrastructure",
+      "title": "홀로그래피 실험 하드웨어 체계 구축",
+      "title_en": "Building holography experimental hardware",
+      "body": "계산한 결과를 실제 장치에서 구현하고 평가하는 연구 환경을 구축합니다.",
+      "body_en": "Building a research environment for implementing and assessing computational results on hardware.",
+      "status": "구축 중",
+      "status_en": "Under development",
+      "project": "holography-hardware"
+    }
+  ],
+  "greeting": [
+    "인스파티움은 2025년 출범 이후 음향, 광학 등 각종 응용과학 및 산업 현장에서 사용될 전산 및 AI 역설계 기술을 연구하고 있습니다. 지난 2년간 저희는 고려대학교 크림슨창업지원단, KISTI 등과 협력하여 대규모 데이터 및 장비를 직접 구축하고, 컴퓨터 속에 국한되지 않는 실물 기술로서의 피지컬 AI를 연구하여 왔습니다.",
+    "실물 기반의 AI를 개발해온 팀의 경험은 '과연 어디에 피지컬 AI가 필요한가'를 질문하게 했습니다. 물리 법칙은 원인이 있다면 결과가 어떻게 될 것인지, 정방향의 질문에는 효과적인 답을 제공합니다. 과거에는 이와 같은 질문에 AI로 대답하는 것이 '피지컬 AI'로 불리어 왔습니다. 그러나 피지컬 AI는 기존의 물리 법칙만으로 간단히 답할 수 없는, '원하는 결과를 만들려면 어떤 원인이 필요했는가?'와 같은 질문에 답해야 합니다.",
+    "저희 인스파티움은 이러한 문제의 풀이를 표준화된 범용 기술로 정리하고, 실시간 제어 및 기계에 이식 가능한 진정한 '지능적 역설계'로 발전시키고 있습니다. 대한민국의 유일무이한 역설계 중심 피지컬 AI 연구팀으로서 더욱 발전된 AI 기반 산업·과학 생태계를 구축하겠습니다.",
+    "AI 시대에 이를 운용하는 인간의 역할은 AI가 운용될 올바른 위치를 선택하고 적용하는 것이라고 생각합니다. 대한민국의 주체적·독자적인 피지컬 AI 운용을 꿈꾸며 가장 필요한 곳에 인간의 목표를 '역설계'하는 인스파티움이 되겠습니다. 많은 관심과 성원 부탁드립니다."
+  ],
+  "greeting_en": [
+    "Since its founding in 2025, Inspatium has researched computational and AI-based inverse-design technologies for acoustics, optics, and other applied sciences and industrial applications. Over the past two years, we have worked with Korea University’s Crimson Startup Support Foundation, KISTI, and others to build large-scale datasets and equipment, pursuing physical AI as a technology that operates beyond the computer and in the real world.",
+    "Our experience developing AI for physical systems led us to ask: where is physical AI truly needed? Physical laws provide effective answers to forward questions: given a cause, what will happen? In the past, using AI to answer such questions has been described as physical AI. Yet physical AI must also address questions that existing physical laws cannot readily answer on their own: what causes are needed to produce a desired outcome?",
+    "At Inspatium, we are developing standardized, general-purpose methods for solving these problems and advancing them into intelligent inverse design that can support real-time control and be embedded in machines. As Korea’s unique physical AI research team centered on inverse design, we aim to help build a more advanced AI-based industrial and scientific ecosystem.",
+    "I believe the human role in the age of AI is to identify where AI belongs and apply it appropriately. With the ambition of enabling independent, self-directed physical AI capabilities in Korea, Inspatium will work to inverse-design human goals where they matter most. We welcome your interest and support."
+  ],
+  "identity": {
+    "vision": "데이터 역설계 연구팀",
+    "vision_en": "A Research Team for Data-Driven Inverse Design",
+    "mission": "설계 및 제어 인공지능을 통한 새로운 산업 시대의 효시",
+    "mission_en": "Pioneering a New Industrial Era Through AI for Design and Control",
+    "mission_body": [
+      "인스파티움은 '원하는 결과를 얻으려면 어떤 원인이 필요한가'를 거꾸로 찾아내는 지능적 역설계 AI 기술을 연구합니다.",
+      "화면 속 계산에 머무르지 않고, 우리 국가의 산업 생태계가 가장 필요로 하는 현장의 최전선에 실물 기반 역설계 기술을 적용합니다. 독자적인 기술력을 바탕으로 자주적 산업 자립을 이끌며, AI 기반의 새로운 산업 시대를 열어가는 진정한 효시가 되겠습니다."
+    ],
+    "mission_body_en": [
+      "Inspatium researches intelligent inverse-design AI that works backward from a desired outcome to identify the causes needed to achieve it.",
+      "We take inverse design beyond on-screen computation and into the physical world, applying it where Korea’s industrial ecosystem needs it most. Through independently developed technology, we aim to strengthen industrial self-reliance and pioneer a new era of AI-enabled industry."
+    ],
+    "philosophy": "본립도생(本立道生) : 기본기가 바로 서면 나아갈 길이 생긴다.",
+    "philosophy_en": "When the Foundations Are Sound, a Path Opens.",
+    "philosophy_body": [
+      "인스파티움은 모두가 튼튼한 기초를 바탕으로 한다면 새로운 길을 열어갈 수 있다는 경영이념을 공유합니다.",
+      "우리가 지키는 기본기는 문제를 정확히 정의하고 정면돌파로 검증해 내는 연구자의 탄탄한 본질이자, 인간사회의 근본적인 필요와 가치에 답하는 데이터 기업으로서의 지향점입니다. 기초가 단단한 데이터 기술과 정직한 본질을 바탕으로, AI 시대 속에서도 흔들리지 않는 인간 중심의 미래와 새로운 산업의 길을 열어가겠습니다."
+    ],
+    "philosophy_body_en": [
+      "Inspatium shares the belief that anyone can open a new path when they build on strong foundations.",
+      "For us, those foundations are the researcher’s commitment to defining problems precisely and testing ideas head-on, and the data company’s responsibility to address fundamental human needs and values. With rigorously grounded data technology and an honest commitment to what matters, we will work toward a human-centered future and new industrial possibilities in the age of AI."
+    ]
+  },
+  "recruitment": {
+    "title": "연구원 모집",
+    "title_en": "Join us",
+    "lead": "함께 연구하고, 인스파티움을 함께 만들어갈 동료를 찾습니다.",
+    "lead_en": "We are looking for people to research and build Inspatium together.",
+    "heading": "함께 연구하고, 함께 기업을 만듭니다.",
+    "heading_en": "Research together. Build Inspatium together.",
+    "body": [
+      "인스파티움은 독립적으로 연구하는 사람들이 모인 연구팀입니다. 서로의 전문성을 연결해 연구를 이어가며, 앞으로 인스파티움을 기업으로 함께 만들어갈 동료를 찾고 있습니다.",
+      "수학과 물리학, AI, 데이터, 하드웨어 등 각자의 관심과 경험을 바탕으로 함께 문제를 풀고 싶은 분을 기다립니다."
+    ],
+    "body_en": [
+      "Inspatium is a team of independent researchers. We combine our expertise to pursue research and are looking for people who want to help build Inspatium into a company.",
+      "We welcome people who want to work on problems together, bringing their interests and experience in mathematics, physics, AI, data, or hardware."
+    ],
+    "contact_title": "함께하고 싶다면",
+    "contact_title_en": "Get in touch",
+    "contact_body": "간단한 자기소개와 관심 있는 연구, 함께 해보고 싶은 일을 메일로 보내주세요.",
+    "contact_body_en": "Email us a brief introduction, your research interests, and what you would like to work on together.",
+    "email_subject": "[인스파티움] 연구 참여 문의",
+    "email_subject_en": "[Inspatium] Research participation inquiry"
+  }
+}
