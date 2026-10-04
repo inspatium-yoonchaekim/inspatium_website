@@ -321,6 +321,8 @@ test('primary surfaces, type and borders use a monochrome palette', async ({ pag
 });
 
 test('capture desktop and mobile draft previews', async ({ page }) => {
+  // Capture settled content, including elements below the viewport.
+  await page.emulateMedia({ reducedMotion: 'reduce' });
   await mkdir('docs/previews', { recursive: true });
   for (const [name, route, width, height] of [['home-desktop', '/ko', 1440, 1000], ['home-mobile', '/ko', 390, 844], ['home-english', '/en', 1440, 1000], ['home-english-mobile', '/en', 390, 844], ['team-desktop', '/ko/team', 1440, 1000], ['team-mobile', '/ko/team', 390, 844], ['member-mobile', '/ko/team/sungjun-choi', 390, 844], ['research-desktop', '/ko/research', 1440, 1000]]) {
     await page.setViewportSize({ width, height });

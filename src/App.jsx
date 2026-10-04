@@ -4,6 +4,7 @@ import { ArrowUpRight, Menu, X, ChevronDown } from 'lucide-react';
 import Home from './Home.jsx';
 import PageContent from './Pages.jsx';
 import data from './content.json';
+import useSmoothScroll from './components/useSmoothScroll.js';
 
 const aboutPages = ['philosophy', 'greeting', 'about', 'history'];
 const titles = {
@@ -77,6 +78,7 @@ function Footer({ lang }) {
 
 export default function App() {
   const location = useLocation();
+  useSmoothScroll(location);
   const parts = location.pathname.split('/').filter(Boolean);
   const lang = parts[0] === 'en' ? 'en' : 'ko';
   const page = parts[1] || 'home';
@@ -94,20 +96,10 @@ export default function App() {
     document.querySelector('meta[name="description"]')?.setAttribute('content', description);
     document.querySelector('meta[property="og:title"]')?.setAttribute('content', document.title);
     document.querySelector('meta[property="og:description"]')?.setAttribute('content', description);
-    if (location.hash) {
-      const frame = requestAnimationFrame(() => {
-        let fragment = location.hash.slice(1);
-        try { fragment = decodeURIComponent(fragment); } catch { /* Keep malformed external fragments harmless. */ }
-        const target = document.getElementById(fragment);
-        target?.scrollIntoView({ block: 'start' });
-      });
-      return () => cancelAnimationFrame(frame);
-    }
-    window.scrollTo(0, 0);
   }, [lang, page, id, location.pathname, location.hash]);
 
   if (location.pathname === '/' || location.pathname === '/index.html') return <Navigate to="/ko" replace />;
   if (validLocale && parts.at(-1) === 'index.html') return <Navigate to={`${location.pathname.replace(/\/index\.html$/, '')}${location.search}${location.hash}`} replace />;
   const unknown = !validLocale || parts.length > 3 || (id && !['research', 'publications', 'news', 'team'].includes(page));
-  return <><Header lang={lang} page={page} /><main id="main" tabIndex={-1}>{page === 'home' && !unknown ? <Home lang={lang} /> : <PageContent lang={lang} page={unknown ? '404' : page} id={id} />}</main><Footer lang={lang} /></>;
+  return <><Header lang={lang} page={page} /><main key={location.pathname} id="main" tabIndex={-1}>{page === 'home' && !unknown ? <Home lang={lang} /> : <PageContent lang={lang} page={unknown ? '404' : page} id={id} />}</main><Footer lang={lang} /></>;
 }

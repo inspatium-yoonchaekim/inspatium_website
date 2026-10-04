@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import { ArrowLeft, ArrowUpRight, ChevronRight, Mail } from 'lucide-react';
 import data from './content.json';
 import './pages.css';
+import SplitText from './components/react-bits/SplitText.jsx';
+import BlurText from './components/react-bits/BlurText.jsx';
+import ScrollReveal from './components/react-bits/ScrollReveal.jsx';
 
 const ABOUT_COPY = {
   ko: [
@@ -40,7 +43,7 @@ function PageHeading({ lang, title, lead, category, parent }) {
         {parent ? <><Link to={path(lang, parent)}>{category}</Link><ChevronRight size={13} aria-hidden="true" /><span>{title}</span></> : <span>{category || title}</span>}
       </nav>
       <div className="inner-heading-content"><span className="eyebrow">INSPATIUM {lang === 'en' ? category || title : titles[parent || category]?.[1] || 'RESEARCH & INVERSE DESIGN'}</span>
-        <h1>{title}</h1>{lead && <p>{lead}</p>}
+        <SplitText tag="h1" text={title} splitType="words" delay={45} />{lead && <BlurText text={lead} direction="bottom" delay={22} />}
       </div>
     </div>
   </section>;
@@ -74,7 +77,7 @@ function Philosophy({ lang }) {
     <PageHeading lang={lang} title={t('비전과 경영철학', 'Vision and philosophy')} category={t('경영철학', 'Philosophy')} />
     <AboutNav lang={lang} active="philosophy" />
     <section className="section wrap philosophy-content">
-      <div className="vision-statement"><span className="eyebrow">{t('비전', 'Vision')}</span><h2>{field(identity, 'vision', lang)}</h2></div>
+      <div className="vision-statement"><span className="eyebrow">{t('비전', 'Vision')}</span><ScrollReveal tag="h2">{field(identity, 'vision', lang)}</ScrollReveal></div>
       <div className="identity-columns">{[['mission', t('미션', 'Mission')], ['philosophy', t('경영철학', 'Philosophy')]].map(([key, label]) => <article className="identity-column" key={key}><span className="eyebrow">{label}</span><h2>{field(identity, key, lang)}</h2><div className="inner-prose">{field(identity, `${key}_body`, lang).map((text, index) => <p key={index}>{text}</p>)}</div></article>)}</div>
     </section>
   </>;
@@ -100,7 +103,7 @@ function About({ lang }) {
     <AboutNav lang={lang} active="about" />
     <section className="section wrap inner-article-grid">
       <aside className="article-aside"><span className="eyebrow">OUR WORK</span><h2>{t('우리가 하는 일', 'What we do')}</h2><p>{t('음향과 광학에서 출발하는 지능적 역설계 연구', 'Intelligent inverse-design research, starting with acoustics and optics')}</p></aside>
-      <article className="inner-prose">{ABOUT_COPY[lang].map((text, index) => <p key={index}>{text}</p>)}<Link className="button" to={path(lang, 'research')}>{t('연구 살펴보기', 'Explore research')}<ArrowUpRight size={18} aria-hidden="true" /></Link></article>
+      <article className="inner-prose">{ABOUT_COPY[lang].map((text, index) => <ScrollReveal key={index}>{text}</ScrollReveal>)}<Link className="button" to={path(lang, 'research')}>{t('연구 살펴보기', 'Explore research')}<ArrowUpRight size={18} aria-hidden="true" /></Link></article>
     </section>
   </>;
 }

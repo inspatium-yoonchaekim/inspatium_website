@@ -90,7 +90,7 @@ main:focus { outline: none; }
 .hero-origin { font-size: 14px; color: var(--muted); }
 .hero-copy { padding-top: 63px; }
 .hero h1 { font-size: clamp(50px, 5.5vw, 80px); line-height: 1.18; letter-spacing: -.065em; font-weight: 700; }
-.hero h1 span { display: block; }
+.hero h1 > span { display: block; }
 .hero-copy > p { max-width: 515px; font-size: 20px; line-height: 1.75; color: #505050; margin-top: 28px; }
 .hero-copy .actions { margin-top: 30px; }
 .hero-en h1 { font-size: clamp(45px, 5.15vw, 74px); letter-spacing: -.055em; }
@@ -172,7 +172,7 @@ main:focus { outline: none; }
   .hero-copy { padding-top: 46px; }
   .hero h1 { font-size: clamp(35px, 9.5vw, 51px); line-height: 1.25; letter-spacing: -.055em; }
   .hero-en h1 { font-size: clamp(35px, 9.5vw, 51px); line-height: 1.2; }
-  .hero h1 span { overflow-wrap: anywhere; }
+  .hero h1 > span { overflow-wrap: anywhere; }
   .hero-copy > p { max-width: 355px; font-size: 18px; line-height: 1.8; margin-top: 25px; }
   .hero-copy .actions { gap: 22px; margin-top: 28px; }
   .hero .button { padding: 14px 17px; min-height: 52px; font-size: 16px; gap: 22px; }
@@ -203,3 +203,7 @@ main:focus { outline: none; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
 }
+
+/* Keep animation wrappers in the existing text flow and preserve word wrapping. */
+.blur-word, .reveal-word { display: inline-block; }
+.split-text .split-word, .blur-word, .reveal-word { max-width: 100%; overflow-wrap: anywhere; }
