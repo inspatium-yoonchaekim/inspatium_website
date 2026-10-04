@@ -110,6 +110,7 @@
   "projects": [
     {
       "id": "acoustic-optimization",
+      "visibility": "hidden",
       "number": "01",
       "title": "음향 홀로그래피의 실시간급 최적화",
       "title_en": "Real-time optimization for acoustic holography",

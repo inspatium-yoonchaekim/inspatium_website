@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { mkdir } from 'node:fs/promises';
+import { mkdir, readFile } from 'node:fs/promises';
 
 const memberEmails = {
   'sungjun-choi': ['sjchol@inspatium.co', 'tonggyegang@korea.ac.kr'],
@@ -7,7 +7,7 @@ const memberEmails = {
   'yoonchae-kim': ['yonchaekim@inspatium.co', 'yonchaekim@ajou.ac.kr'],
   'yoonseo-gu': ['yunseo7560@inspatium.co', 'gys0821@korea.ac.kr'],
 };
-const pages = ['', '/philosophy', '/greeting', '/about', '/history', '/research', '/research/acoustic-optimization', '/research/few-shot-inverse-design', '/research/embedded-physical-ai', '/research/holography-hardware', '/publications', '/publications/hat-2026', '/team', ...Object.keys(memberEmails).map(id => `/team/${id}`), '/join', '/news', '/contact'];
+const pages = ['', '/philosophy', '/greeting', '/about', '/history', '/research', '/research/few-shot-inverse-design', '/research/embedded-physical-ai', '/research/holography-hardware', '/publications', '/publications/hat-2026', '/team', ...Object.keys(memberEmails).map(id => `/team/${id}`), '/join', '/news', '/contact'];
 
 for (const lang of ['ko', 'en']) {
   test(`${lang}: all pages load without runtime errors or horizontal overflow`, async ({ page }) => {
@@ -32,7 +32,7 @@ for (const lang of ['ko', 'en']) {
 
 test('locale home and detail pages survive direct navigation and refresh', async ({ page }) => {
   for (const lang of ['ko', 'en']) {
-    for (const route of ['', '/team/sungjun-choi', '/research/acoustic-optimization']) {
+    for (const route of ['', '/team/sungjun-choi', '/research/few-shot-inverse-design']) {
       const path = `/${lang}${route}?source=refresh`;
       const response = await page.goto(path);
       expect(response.status(), path).toBe(200);
@@ -47,14 +47,75 @@ test('locale home and detail pages survive direct navigation and refresh', async
 });
 
 test('language switching preserves the research detail route and member anchor', async ({ page }) => {
-  await page.goto('/ko/research/acoustic-optimization');
+  await page.goto('/ko/research/few-shot-inverse-design');
   await page.getByRole('link', { name: 'Switch to English' }).click();
-  await expect(page).toHaveURL(/\/en\/research\/acoustic-optimization$/);
+  await expect(page).toHaveURL(/\/en\/research\/few-shot-inverse-design$/);
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
   await page.goto('/en/team#yoonchae-kim');
   await page.getByRole('link', { name: '한국어로 전환' }).click();
   await expect(page).toHaveURL(/\/ko\/team#yoonchae-kim$/);
   await expect(page.locator('#yoonchae-kim')).toBeInViewport();
+});
+
+test('research visibility controls links and direct routes while preserving other pages', async ({ page }) => {
+  const content = JSON.parse(await readFile(new URL('../src/content.json', import.meta.url), 'utf8'));
+  const projectId = 'acoustic-optimization';
+  const project = content.projects.find(item => item.id === projectId);
+  const hidden = project.visibility === 'hidden';
+  const publicIds = content.projects.filter(item => item.visibility !== 'hidden').map(item => item.id);
+  for (const lang of ['ko', 'en']) {
+    const projectField = key => lang === 'en' ? project[`${key}_en`] ?? project[key] : project[key];
+    await page.goto(`/${lang}/research`);
+    await expect(page.locator('.research-list-item')).toHaveCount(publicIds.length);
+    if (hidden) await expect(page.locator(`main a[href*="/research/${projectId}"]`)).toHaveCount(0);
+    for (const id of publicIds) {
+      await expect(page.locator(`main a[href="/${lang}/research/${id}"]`).first()).toBeVisible();
+    }
+
+    for (const route of ['history', 'news', 'publications', 'publications/hat-2026', 'team', ...Object.keys(memberEmails).map(id => `team/${id}`)]) {
+      await page.goto(`/${lang}/${route}`);
+      await expect(page.locator('h1')).toBeVisible();
+      await expect(page.locator('main')).not.toContainText('404');
+      if (hidden) {
+        await expect(page.locator(`main a[href*="/research/${projectId}"]`)).toHaveCount(0);
+        await expect(page.locator('main')).not.toContainText('7.86');
+      } else if (route === 'history' || route === 'publications/hat-2026' || (route.startsWith('team/') && project.people.includes(route.slice('team/'.length)))) {
+        await expect(page.locator(`main a[href="/${lang}/research/${projectId}"]`).first()).toBeVisible();
+      }
+      if (route === 'publications/hat-2026') {
+        await expect(page.locator('.publication-detail-title')).toContainText(lang === 'ko' ? '홀로그래피 음향 집게' : 'holographic acoustic tweezers');
+      }
+    }
+
+    const assertDetailVisibility = async () => {
+      if (hidden) {
+        await expect(page.locator('h1')).toHaveText(lang === 'ko' ? '페이지를 찾을 수 없습니다.' : 'Page not found.');
+        await expect(page.locator('main')).not.toContainText(projectField('title'));
+        await expect(page.locator('main')).not.toContainText('7.86');
+        await expect(page).not.toHaveTitle(`${projectField('title')} | INSPATIUM`);
+        await expect(page.locator('meta[property="og:title"]')).not.toHaveAttribute('content', `${projectField('title')} | INSPATIUM`);
+        for (const selector of ['meta[name="description"]', 'meta[property="og:description"]']) {
+          await expect(page.locator(selector)).not.toHaveAttribute('content', projectField('summary'));
+        }
+      } else {
+        await expect(page.locator('h1')).toHaveText(projectField('title'));
+        await expect(page.locator('main')).toContainText(projectField('outcome'));
+        await expect(page).toHaveTitle(`${projectField('title')} | INSPATIUM`);
+        await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', `${projectField('title')} | INSPATIUM`);
+        for (const selector of ['meta[name="description"]', 'meta[property="og:description"]']) {
+          await expect(page.locator(selector)).toHaveAttribute('content', projectField('summary'));
+        }
+      }
+    };
+    const projectPath = `/${lang}/research/${projectId}`;
+    for (const suffix of ['', '?source=hidden-check', '/index.html?source=hidden-check']) {
+      await page.goto(`${projectPath}${suffix}`);
+      await expect(page).toHaveURL(`${projectPath}${suffix.replace('/index.html', '')}`);
+      await assertDetailVisibility();
+      await page.reload();
+      await assertDetailVisibility();
+    }
+  }
 });
 
 test('desktop about dropdown, mobile menu and news filtering are operable', async ({ page }) => {
@@ -82,8 +143,8 @@ test('email actions are addressed correctly and legacy and missing routes resolv
   await expect(mail).toHaveAttribute('href', /mailto:sjchol@inspatium\.co\?subject=/);
   await page.goto('/ko/contact');
   await expect(page.locator('main a[href^="mailto:"]').first()).toHaveAttribute('href', /^mailto:sjchol@inspatium\.co/);
-  await page.goto('/en/research/acoustic-optimization/index.html');
-  await expect(page).toHaveURL(/\/en\/research\/acoustic-optimization$/);
+  await page.goto('/en/research/few-shot-inverse-design/index.html');
+  await expect(page).toHaveURL(/\/en\/research\/few-shot-inverse-design$/);
   await page.goto('/ko/team/sungjun-choi');
   await expect(page).toHaveURL(/\/ko\/team\/sungjun-choi$/);
   await expect(page.locator('#sungjun-choi')).toBeVisible();
@@ -118,7 +179,7 @@ test('home stays compact with readable typography and links to detailed pages', 
     }
     await page.locator(`main a[href="/${lang}/research"]`).first().click();
     await expect(page).toHaveURL(new RegExp(`/${lang}/research$`));
-    await expect(page.locator(`main a[href="/${lang}/research/acoustic-optimization"]`).first()).toBeVisible();
+    await expect(page.locator(`main a[href="/${lang}/research/few-shot-inverse-design"]`).first()).toBeVisible();
     await page.goto(`/${lang}`);
     await page.locator(`main a[href="/${lang}/about"]`).first().click();
     await expect(page).toHaveURL(new RegExp(`/${lang}/about$`));
