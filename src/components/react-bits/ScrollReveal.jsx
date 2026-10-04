@@ -18,11 +18,12 @@ export default function ScrollReveal({
   ), [children]);
 
   useGSAP(() => {
-    if (!ref.current || reducedMotion) return;
+    if (!ref.current) return;
     gsap.fromTo(ref.current.querySelectorAll('.reveal-word'), {
-      opacity: baseOpacity, filter: enableBlur ? `blur(${blurStrength}px)` : 'none',
+      opacity: reducedMotion ? 0.65 : baseOpacity,
+      filter: enableBlur && !reducedMotion ? `blur(${blurStrength}px)` : 'none',
     }, {
-      opacity: 1, filter: enableBlur ? 'blur(0px)' : 'none', ease: 'none', stagger: 0.05,
+      opacity: 1, filter: enableBlur && !reducedMotion ? 'blur(0px)' : 'none', ease: 'none', stagger: 0.05,
       scrollTrigger: {
         trigger: ref.current, start: 'top bottom', end: wordAnimationEnd, scrub: true,
       },

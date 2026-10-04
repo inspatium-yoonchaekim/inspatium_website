@@ -35,7 +35,7 @@ const BlurText = ({
   const reducedMotion = useReducedMotion();
 
   useEffect(() => {
-    if (!ref.current || reducedMotion) return;
+    if (!ref.current) return;
     if (!('IntersectionObserver' in window)) { setInView(true); return; }
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -68,14 +68,12 @@ const BlurText = ({
     [direction]
   );
 
-  const fromSnapshot = animationFrom ?? defaultFrom;
-  const toSnapshots = animationTo ?? defaultTo;
+  const fromSnapshot = reducedMotion ? { opacity: 0, y: 0, filter: 'none' } : animationFrom ?? defaultFrom;
+  const toSnapshots = reducedMotion ? [{ opacity: 1, y: 0, filter: 'none' }] : animationTo ?? defaultTo;
 
   const stepCount = toSnapshots.length + 1;
   const totalDuration = stepDuration * (stepCount - 1);
   const times = Array.from({ length: stepCount }, (_, i) => (stepCount === 1 ? 0 : i / (stepCount - 1)));
-
-  if (reducedMotion) return <Tag className={`blur-text ${className}`} data-text-animation="blur">{text}</Tag>;
 
   return (
     <Tag ref={ref} className={`blur-text ${className}`} data-text-animation="blur">

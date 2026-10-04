@@ -50,7 +50,7 @@ Vite의 빌드 미리보기만 사용할 경우 `npm run preview`를 실행할 �
 
 [React Bits](https://reactbits.dev/)의 SplitText·BlurText·ScrollReveal를 기존 화면에 맞춰 적용했습니다. 홈 제목과 바로가기 제목은 글자·단어가 차례로 올라오고, 홈 소개와 내부 페이지 소개는 블러가 풀리며 등장합니다. 경영철학의 비전과 연구 방향 본문은 스크롤 진행에 맞춰 단어가 드러납니다. 기존 한국어·영어 문안과 제목 구조를 유지합니다.
 
-`src/components/react-bits/`에서 효과별 `delay`, `duration`, `baseOpacity`, `blurStrength`를 조절할 수 있습니다. 출처·적용 사항과 원본 라이선스는 같은 폴더의 README·LICENSE에 기록했습니다. [Lenis](https://github.com/darkroomengineering/lenis)는 `src/components/useSmoothScroll.js`에서 휠 스크롤을 부드럽게 처리하며 `lerp`로 감도를 조절합니다. 모바일 터치는 브라우저 기본 스크롤을 사용하고 메뉴 내부 스크롤·본문 바로가기·구성원 앵커·언어 전환을 지원합니다. 운영체제에서 동작 줄이기를 켜면 텍스트는 즉시 표시되고 기본 스크롤을 사용합니다.
+`src/components/react-bits/`에서 효과별 `delay`, `duration`, `baseOpacity`, `blurStrength`를 조절할 수 있습니다. 출처·적용 사항과 원본 라이선스는 같은 폴더의 README·LICENSE에 기록했습니다. [Lenis](https://github.com/darkroomengineering/lenis)는 `src/components/useSmoothScroll.js`에서 휠 스크롤을 부드럽게 처리하며 `lerp`로 감도를 조절합니다. 휠·트랙패드·터치 스크롤을 부드럽게 처리하고 메뉴 내부 스크롤·본문 바로가기·구성원 앵커·언어 전환을 지원합니다. 운영체제에서 동작 줄이기를 켜면 이동·블러를 줄인 페이드 효과를 사용하며, 부드러운 스크롤은 유지합니다. 모든 페이지의 본문·목록·구성원·연혁·문의 패널에는 공통 등장 효과를 적용하고, 스크롤로 다시 진입하거나 페이지를 이동하면 재생합니다. 공통 효과는 `src/components/usePageEntrance.js`에서 조절합니다.
 
 ## 콘텐츠 및 화면 편집
 

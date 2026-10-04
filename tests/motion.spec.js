@@ -59,20 +59,20 @@ test('smooth wheel scrolling settles and navigation stops inertia at the new pag
   expect(await page.evaluate(() => window.scrollY)).toBe(0);
 });
 
-test('reduced motion shows text immediately and changes live without breaking anchors', async ({ page }) => {
+test('reduced motion keeps gentle entrances and smooth scrolling without breaking anchors', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/ko/about');
-  await expect(page.locator('html')).not.toHaveClass(/lenis/);
-  await expect(page.locator('.split-char, .blur-word')).toHaveCount(0);
+  await expect(page.locator('html')).toHaveClass(/lenis/);
+  await expect(page.locator('h1 .split-word').first()).toBeAttached();
   await expect.poll(() => page.locator('.reveal-word').evaluateAll(words =>
-    words.every(word => getComputedStyle(word).opacity === '1' && getComputedStyle(word).filter === 'none')
+    words.every(word => getComputedStyle(word).filter === 'none')
   )).toBe(true);
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await expect(page.locator('html')).toHaveClass(/lenis/);
   await expect(page.locator('h1 .split-word').first()).toBeAttached();
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  await expect(page.locator('html')).not.toHaveClass(/lenis/);
-  await expect(page.locator('h1 .split-word')).toHaveCount(0);
+  await expect(page.locator('html')).toHaveClass(/lenis/);
+  await expect(page.locator('h1 .split-word').first()).toBeAttached();
   await page.goto('/ko/team#yoonchae-kim');
   await expect(page.locator('#yoonchae-kim')).toBeInViewport();
   await page.getByRole('link', { name: 'Switch to English' }).click();
@@ -83,6 +83,6 @@ test('reduced motion shows text immediately and changes live without breaking an
   await expect(page.locator('html')).toHaveClass(/lenis/);
   expect(await page.evaluate(() => window.scrollY)).toBe(anchorPosition);
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  await expect(page.locator('html')).not.toHaveClass(/lenis/);
+  await expect(page.locator('html')).toHaveClass(/lenis/);
   expect(await page.evaluate(() => window.scrollY)).toBe(anchorPosition);
 });

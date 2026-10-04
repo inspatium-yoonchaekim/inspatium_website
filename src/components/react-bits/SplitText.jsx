@@ -24,7 +24,7 @@ export default function SplitText({
   }, []);
 
   useGSAP(() => {
-    if (!ref.current || !text || !fontsLoaded || reducedMotion) return;
+    if (!ref.current || !text || !fontsLoaded) return;
     let completed = false;
     const split = new GSAPSplitText(ref.current, {
       type: splitType,
@@ -38,8 +38,9 @@ export default function SplitText({
         const targets = splitType.includes('chars') ? self.chars
           : splitType.includes('words') ? self.words : self.lines;
         if (completed) { gsap.set(targets, to); return; }
-        return gsap.fromTo(targets, from, {
-          ...to, duration, ease, stagger: delay / 1000,
+        return gsap.fromTo(targets, reducedMotion ? { opacity: 0 } : from, {
+          ...to, duration: reducedMotion ? 0.45 : duration, ease,
+          stagger: reducedMotion ? 0.015 : delay / 1000,
           scrollTrigger: {
             trigger: ref.current, start: `top ${(1 - threshold) * 100}%`, once: true,
             fastScrollEnd: true,

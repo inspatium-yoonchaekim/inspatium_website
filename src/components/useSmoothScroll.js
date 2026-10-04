@@ -2,36 +2,32 @@ import { useEffect, useRef } from 'react';
 import Lenis from 'lenis';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import useReducedMotion from './useReducedMotion.js';
 import 'lenis/dist/lenis.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function useSmoothScroll(location) {
   const instance = useRef(null);
-  const reducedMotion = useReducedMotion();
 
   useEffect(() => {
-    if (reducedMotion) return;
     const lenis = new Lenis({
-      lerp: 0.085,
+      autoRaf: true,
+      lerp: 0.075,
       smoothWheel: true,
-      syncTouch: false,
+      syncTouch: true,
+      respectReducedMotion: false,
       anchors: true,
       stopInertiaOnNavigate: true,
       prevent: node => node.classList?.contains('main-nav'),
     });
     instance.current = lenis;
-    const tick = time => lenis.raf(time * 1000);
     lenis.on('scroll', ScrollTrigger.update);
-    gsap.ticker.add(tick);
     return () => {
-      gsap.ticker.remove(tick);
       lenis.off('scroll', ScrollTrigger.update);
       lenis.destroy();
       instance.current = null;
     };
-  }, [reducedMotion]);
+  }, []);
 
   useEffect(() => {
     // Stop any remaining wheel inertia before a new route is measured.
