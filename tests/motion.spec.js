@@ -1,5 +1,68 @@
 import { test, expect } from '@playwright/test';
 
+test.describe('links remain usable during entrance animations', () => {
+  test.use({ hasTouch: true });
+
+  for (const input of ['mouse', 'touch', 'keyboard']) {
+    test(`${input} activates entering links without losing keyboard visibility`, async ({ page }) => {
+      const time = new Date('2026-10-08T00:00:00Z');
+      await page.clock.install({ time });
+      await page.clock.pauseAt(time);
+
+      for (const reducedMotion of ['no-preference', 'reduce']) {
+        await page.emulateMedia({ reducedMotion });
+        for (const lang of ['ko', 'en']) {
+          for (const [route, destination, container, width] of [
+            ['', 'about', '.hero-copy .actions', 320],
+            ['team', 'team/woojin-an', '#woojin-an', 1280],
+          ]) {
+            await page.setViewportSize({ width, height: 900 });
+            await page.goto(`/${lang}/${route}`);
+            const ancestor = page.locator(container);
+            const link = ancestor.locator(`a[href="/${lang}/${destination}"]`).first();
+            await link.waitFor({ state: 'attached' });
+            await page.evaluate(() => document.fonts.ready);
+            await page.clock.runFor(16);
+            await link.evaluate(element => element.scrollIntoView({ block: 'center', behavior: 'instant' }));
+
+            // Hold a real, partially visible entrance frame while sending native input.
+            let opacity = 0;
+            for (let frame = 0; frame < 100 && opacity <= 0.05; frame++) {
+              await page.clock.runFor(16);
+              opacity = await ancestor.evaluate(element => Number(getComputedStyle(element).opacity));
+            }
+            expect(opacity).toBeGreaterThan(0.05);
+            expect(opacity).toBeLessThan(0.5);
+            const offset = await ancestor.evaluate(element => new DOMMatrixReadOnly(getComputedStyle(element).transform).m42);
+            if (reducedMotion === 'no-preference') expect(offset).toBeGreaterThan(15);
+
+            if (input === 'keyboard') {
+              // Start Tab traversal from a stable header link, independent of scroll position.
+              await page.locator('header .brand').focus();
+              for (let tab = 0; tab < 30 && !await link.evaluate(element => element === document.activeElement); tab++) {
+                await page.keyboard.press('Tab');
+              }
+              await expect(link).toBeFocused();
+              expect(await link.evaluate(element => element.matches(':focus-visible'))).toBe(true);
+              expect(await ancestor.evaluate(element => Number(getComputedStyle(element).opacity))).toBe(1);
+              expect(await ancestor.evaluate(element => new DOMMatrixReadOnly(getComputedStyle(element).transform).m42)).toBe(0);
+              await page.keyboard.press('Enter');
+            } else {
+              const bounds = await link.boundingBox();
+              expect(bounds).not.toBeNull();
+              const x = bounds.x + bounds.width / 2;
+              const y = bounds.y + bounds.height - 4;
+              if (input === 'mouse') await page.mouse.click(x, y);
+              else await page.touchscreen.tap(x, y);
+            }
+            await expect(page).toHaveURL(new RegExp(`/${lang}/${destination}$`));
+          }
+        }
+      }
+    });
+  }
+});
+
 test('text entrances finish with readable Korean and English headings and copy', async ({ page }) => {
   for (const lang of ['ko', 'en']) {
     await page.goto(`/${lang}`);

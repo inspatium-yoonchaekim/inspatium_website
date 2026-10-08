@@ -73,6 +73,8 @@ export default function usePageEntrance(mainRef, pathname) {
     observer.observe(main, { childList: true, subtree: true });
     document.fonts.ready.then(() => { if (active) revealContent(); });
     const showFocusedContent = event => {
+      // Pointer focus must not move a link between press and release.
+      if (!event.target.matches(':focus-visible')) return;
       for (const [element, tween] of animated) {
         if (element.contains(event.target)) tween.progress(1);
       }
