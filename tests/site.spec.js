@@ -207,7 +207,7 @@ test('desktop about dropdown, mobile menu and news filtering are operable', asyn
   await page.goto('/ko');
   await page.locator('.about-dropdown summary').click();
   await expect(page.locator('.dropdown-links')).toBeVisible();
-  await page.locator('.dropdown-links').getByRole('link', { name: '경영철학' }).click();
+  await page.locator('.dropdown-links').getByRole('link', { name: '연구철학' }).click();
   await expect(page).toHaveURL(/\/ko\/philosophy$/);
   await page.setViewportSize({ width: 390, height: 844 });
   await page.getByRole('button', { name: '메뉴 열기' }).click();

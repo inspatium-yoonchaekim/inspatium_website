@@ -10,7 +10,7 @@ import usePageEntrance from './components/usePageEntrance.js';
 const aboutPages = ['philosophy', 'greeting', 'about', 'history'];
 const titles = {
   home: ['데이터 역설계 연구팀', 'Data-driven inverse design'],
-  philosophy: ['경영철학', 'Philosophy'], greeting: ['인사말', 'Our message'],
+  philosophy: ['연구철학', 'Research philosophy'], greeting: ['인사말', 'Our message'],
   about: ['연구 방향', 'Our work'], history: ['연혁', 'History'],
   research: ['연구', 'Research'], publications: ['논문', 'Publications'],
   team: ['구성원', 'Team'], join: ['연구원 모집', 'Join us'],
@@ -73,7 +73,7 @@ function Footer({ lang }) {
     <div className="footer-main"><div><Brand lang={lang} /><p>{t('수학과 물리학에서, 새로운 가능성으로.', 'From mathematics and physics to new possibilities.')}</p></div>
       <div className="footer-contact"><Link className="footer-join" to={`/${lang}/join`}>{t('함께 연구하기', 'Research with us')}<ArrowUpRight size={18} aria-hidden="true" /></Link><a href={`mailto:${data.site.email}`}>{data.site.email}<ArrowUpRight size={19} aria-hidden="true" /></a></div>
     </div>
-    <div className="footer-bottom"><span>© {new Date().getFullYear()} Inspatium.</span><div><Link to={`/${lang}/philosophy`}>{t('경영철학', 'Philosophy')}</Link><span>{t('2025년 출범', 'Founded in 2025')}</span></div></div>
+    <div className="footer-bottom"><span>© {new Date().getFullYear()} Inspatium.</span><div><Link to={`/${lang}/philosophy`}>{t('연구철학', 'Research philosophy')}</Link><span>{t('2025년 출범', 'Founded in 2025')}</span></div></div>
   </div></footer>;
 }
 

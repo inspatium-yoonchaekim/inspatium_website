@@ -23,7 +23,7 @@ const ABOUT_COPY = {
 };
 
 const titles = {
-  philosophy: ['경영철학', 'Philosophy'], greeting: ['인사말', 'Lead Researcher’s message'],
+  philosophy: ['연구철학', 'Research philosophy'], greeting: ['인사말', 'Lead Researcher’s message'],
   about: ['연구 방향', 'Our work'], history: ['연혁', 'History'], research: ['연구', 'Research'],
   publications: ['논문', 'Publications'], team: ['구성원', 'Team'], join: ['연구원 모집', 'Join us'],
   news: ['소식', 'News'], contact: ['문의', 'Contact'],
@@ -74,11 +74,11 @@ function Philosophy({ lang }) {
   const t = (ko, en) => translate(lang, ko, en);
   const identity = data.identity;
   return <>
-    <PageHeading lang={lang} title={t('비전과 경영철학', 'Vision and philosophy')} category={t('경영철학', 'Philosophy')} />
+    <PageHeading lang={lang} title={t('비전과 연구철학', 'Vision and research philosophy')} category={t('연구철학', 'Research philosophy')} />
     <AboutNav lang={lang} active="philosophy" />
     <section className="section wrap philosophy-content">
       <div className="vision-statement"><span className="eyebrow">{t('비전', 'Vision')}</span><ScrollReveal tag="h2">{field(identity, 'vision', lang)}</ScrollReveal></div>
-      <div className="identity-columns">{[['mission', t('미션', 'Mission')], ['philosophy', t('경영철학', 'Philosophy')]].map(([key, label]) => <article className="identity-column" key={key}><span className="eyebrow">{label}</span><h2>{field(identity, key, lang)}</h2><div className="inner-prose">{field(identity, `${key}_body`, lang).map((text, index) => <p key={index}>{text}</p>)}</div></article>)}</div>
+      <div className="identity-columns">{[['mission', t('미션', 'Mission')], ['philosophy', t('연구철학', 'Research philosophy')]].map(([key, label]) => <article className="identity-column" key={key}><span className="eyebrow">{label}</span><h2>{field(identity, key, lang)}</h2><div className="inner-prose">{field(identity, `${key}_body`, lang).map((text, index) => <p key={index}>{text}</p>)}</div></article>)}</div>
     </section>
   </>;
 }
@@ -220,7 +220,7 @@ function Join({ lang }) {
   const t = (ko, en) => translate(lang, ko, en);
   const info = data.recruitment;
   const mailto = `mailto:${data.site.email}?subject=${encodeURIComponent(field(info, 'email_subject', lang))}`;
-  return <><PageHeading lang={lang} title={field(info, 'title', lang)} lead={field(info, 'lead', lang)} /><section className="section wrap join-page-grid"><article className="inner-prose"><h2>{field(info, 'heading', lang)}</h2>{field(info, 'body', lang).map((text, index) => <p key={index}>{text}</p>)}<div className="join-reference-links"><TextLink to={path(lang, 'philosophy')}>{t('경영철학 읽기', 'Our philosophy')}</TextLink><TextLink to={path(lang, 'greeting')}>{t('인사말 읽기', 'Lead Researcher’s message')}</TextLink><TextLink to={path(lang, 'research')}>{t('연구 살펴보기', 'Explore research')}</TextLink></div></article><aside className="inner-contact-panel"><Mail size={28} strokeWidth={1.5} aria-hidden="true" /><h2>{field(info, 'contact_title', lang)}</h2><p>{field(info, 'contact_body', lang)}</p><a className="contact-email" href={`mailto:${data.site.email}`}>{data.site.email}</a><a className="button" href={mailto}>{t('참여 문의하기', 'Contact us to join')}<ArrowUpRight size={18} aria-hidden="true" /></a></aside></section></>;
+  return <><PageHeading lang={lang} title={field(info, 'title', lang)} lead={field(info, 'lead', lang)} /><section className="section wrap join-page-grid"><article className="inner-prose"><h2>{field(info, 'heading', lang)}</h2>{field(info, 'body', lang).map((text, index) => <p key={index}>{text}</p>)}<div className="join-reference-links"><TextLink to={path(lang, 'philosophy')}>{t('연구철학 읽기', 'Our research philosophy')}</TextLink><TextLink to={path(lang, 'greeting')}>{t('인사말 읽기', 'Lead Researcher’s message')}</TextLink><TextLink to={path(lang, 'research')}>{t('연구 살펴보기', 'Explore research')}</TextLink></div></article><aside className="inner-contact-panel"><Mail size={28} strokeWidth={1.5} aria-hidden="true" /><h2>{field(info, 'contact_title', lang)}</h2><p>{field(info, 'contact_body', lang)}</p><a className="contact-email" href={`mailto:${data.site.email}`}>{data.site.email}</a><a className="button" href={mailto}>{t('참여 문의하기', 'Contact us to join')}<ArrowUpRight size={18} aria-hidden="true" /></a></aside></section></>;
 }
 
 function Contact({ lang }) {
