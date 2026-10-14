@@ -110,7 +110,7 @@
   "projects": [
     {
       "id": "acoustic-optimization",
-      "visibility": "hidden",
+      "visibility": "public",
       "number": "01",
       "title": "음향 홀로그래피의 실시간급 최적화",
       "title_en": "Real-time optimization for acoustic holography",
@@ -206,7 +206,7 @@
   "publications": [
     {
       "id": "hat-2026",
-      "visibility": "hidden",
+      "visibility": "public",
       "title": "홀로그래피 음향 집게의 실시간 최적화를 위한 목적함수 설계",
       "title_en": "Objective design for real-time optimization in holographic acoustic tweezers",
       "original_title": "Objective design for real-time optimization in holographic acoustic tweezers",
@@ -225,7 +225,447 @@
       "public_release": false
     }
   ],
-  "news": [],
+  "news": [
+    {
+      "id": "media-moneytoday-20261012",
+      "date": "2026-10-12",
+      "category": "media",
+      "category_label": "언론 보도",
+      "category_label_en": "Media coverage",
+      "outlet": "머니투데이",
+      "outlet_en": "MoneyToday",
+      "priority": 80,
+      "title": "소리로 세포 띄워 공중에서 연구…계산시간 크게 줄인 학생연구팀",
+      "title_en": "Student team cuts computation time for studying cells suspended by sound",
+      "summary": "소리로 작은 물체를 띄우는 기술과 제어 계산 시간을 줄인 학생 연구팀을 소개했습니다.",
+      "summary_en": "Coverage of acoustic levitation and the student team developing faster control calculations.",
+      "body": [
+        "고려대·아주대 학부생 공동연구팀이 진행한 음향 제어 계산 연구와 국제학술지 Results in Engineering에 게재된 논문을 소개한 기사입니다."
+      ],
+      "body_en": [
+        "The article covers acoustic control computation by the undergraduate team from Korea University and Ajou University, and their paper published in Results in Engineering."
+      ],
+      "url": "https://www.mt.co.kr/society/2026/10/12/2026101215452999274",
+      "project": "acoustic-optimization",
+      "visibility": "public"
+    },
+    {
+      "id": "media-zdnet-20261012",
+      "date": "2026-10-12",
+      "category": "media",
+      "category_label": "언론 보도",
+      "category_label_en": "Media coverage",
+      "outlet": "ZDNet Korea",
+      "outlet_en": "ZDNet Korea",
+      "priority": 60,
+      "title": "고려대·아주대 학부생 3명이 트랩 계산시간 2,900배 단축",
+      "title_en": "Three Korea University and Ajou University undergraduates cut trap computation time by 2,900 times",
+      "summary": "고려대·아주대 학부생 공동연구팀의 음향 트랩 최적화 연구와 계산 효율 개선을 보도했습니다.",
+      "summary_en": "Coverage of acoustic trap optimization and more efficient computation by the undergraduate team.",
+      "body": [
+        "고려대·아주대 학부생 공동연구팀이 진행한 음향 제어 계산 연구와 국제학술지 Results in Engineering에 게재된 논문을 소개한 기사입니다."
+      ],
+      "body_en": [
+        "The article covers acoustic control computation by the undergraduate team from Korea University and Ajou University, and their paper published in Results in Engineering."
+      ],
+      "url": "https://zdnet.co.kr/view/?no=20261012183644",
+      "project": "acoustic-optimization",
+      "visibility": "public"
+    },
+    {
+      "id": "media-digitaltimes-20261012",
+      "date": "2026-10-12",
+      "category": "media",
+      "category_label": "언론 보도",
+      "category_label_en": "Media coverage",
+      "outlet": "디지털타임스",
+      "outlet_en": "Digital Times",
+      "priority": 70,
+      "title": "고려대 학부생 연구팀, 소리로 물체 붙잡는 계산 시간 2900배 단축",
+      "title_en": "Korea University undergraduate team cuts acoustic trapping computation time by 2,900 times",
+      "summary": "음향 집게의 제어 계산을 효율화한 학부생 공동연구팀의 연구 성과를 소개했습니다.",
+      "summary_en": "Coverage of the undergraduate team’s work on more efficient acoustic tweezer control calculations.",
+      "body": [
+        "고려대·아주대 학부생 공동연구팀이 진행한 음향 제어 계산 연구와 국제학술지 Results in Engineering에 게재된 논문을 소개한 기사입니다."
+      ],
+      "body_en": [
+        "The article covers acoustic control computation by the undergraduate team from Korea University and Ajou University, and their paper published in Results in Engineering."
+      ],
+      "url": "https://www.dt.co.kr/article/12088591",
+      "project": "acoustic-optimization",
+      "visibility": "public"
+    },
+    {
+      "id": "media-metro-20261012",
+      "date": "2026-10-12",
+      "category": "media",
+      "category_label": "언론 보도",
+      "category_label_en": "Media coverage",
+      "outlet": "메트로신문",
+      "outlet_en": "Metro",
+      "priority": 0,
+      "title": "학부생들이 국제학술지에 논문 게재…소리로 물체 붙잡는 시간 0.01초면 계산",
+      "title_en": "Undergraduates publish an international journal paper on computing acoustic traps in 0.01 seconds",
+      "summary": "학부생 연구팀의 국제학술지 게재와 음향 제어 계산 연구를 소개했습니다.",
+      "summary_en": "Coverage of the undergraduate team’s journal publication and acoustic control research.",
+      "body": [
+        "고려대·아주대 학부생 공동연구팀이 진행한 음향 제어 계산 연구와 국제학술지 Results in Engineering에 게재된 논문을 소개한 기사입니다."
+      ],
+      "body_en": [
+        "The article covers acoustic control computation by the undergraduate team from Korea University and Ajou University, and their paper published in Results in Engineering."
+      ],
+      "url": "https://www.metroseoul.co.kr/article/20261012500202",
+      "project": "acoustic-optimization",
+      "visibility": "public"
+    },
+    {
+      "id": "media-veritasalpha-20261012",
+      "date": "2026-10-12",
+      "category": "media",
+      "category_label": "언론 보도",
+      "category_label_en": "Media coverage",
+      "outlet": "베리타스알파",
+      "outlet_en": "Veritas Alpha",
+      "priority": 0,
+      "title": "고려대-아주대 학부생 공동연구팀 음향 부양 계산 시간 2900배 단축.. '지도교수 없이 국제학술지 게재'",
+      "title_en": "Korea University–Ajou University undergraduate team cuts acoustic levitation computation time by 2,900 times",
+      "summary": "고려대·아주대 학부생 공동연구팀의 음향 부양 연구와 국제학술지 게재 소식을 전했습니다.",
+      "summary_en": "Coverage of the undergraduate team’s acoustic levitation research and international journal publication.",
+      "body": [
+        "고려대·아주대 학부생 공동연구팀이 진행한 음향 제어 계산 연구와 국제학술지 Results in Engineering에 게재된 논문을 소개한 기사입니다."
+      ],
+      "body_en": [
+        "The article covers acoustic control computation by the undergraduate team from Korea University and Ajou University, and their paper published in Results in Engineering."
+      ],
+      "url": "https://www.veritas-a.com/news/articleView.html?idxno=631431",
+      "project": "acoustic-optimization",
+      "visibility": "public"
+    },
+    {
+      "id": "media-smarteconomy-20261012",
+      "date": "2026-10-12",
+      "category": "media",
+      "category_label": "언론 보도",
+      "category_label_en": "Media coverage",
+      "outlet": "스마트경제",
+      "outlet_en": "Smart Economy",
+      "priority": 0,
+      "title": "“교수 없이 학부생들이 해냈다”… 소리 집게 계산 시간 2900배 단축한 고려대·아주대생들, 세계적 저널 쾌거",
+      "title_en": "Korea University and Ajou University students cut acoustic tweezer computation time by 2,900 times without faculty supervision",
+      "summary": "학부생 공동연구팀이 독립적으로 진행한 음향 집게 최적화 연구를 소개했습니다.",
+      "summary_en": "Coverage of the undergraduate team’s independently conducted acoustic tweezer optimization research.",
+      "body": [
+        "고려대·아주대 학부생 공동연구팀이 진행한 음향 제어 계산 연구와 국제학술지 Results in Engineering에 게재된 논문을 소개한 기사입니다."
+      ],
+      "body_en": [
+        "The article covers acoustic control computation by the undergraduate team from Korea University and Ajou University, and their paper published in Results in Engineering."
+      ],
+      "url": "https://www.dailysmart.co.kr/news/articleView.html?idxno=130933",
+      "project": "acoustic-optimization",
+      "visibility": "public"
+    },
+    {
+      "id": "media-newsfreezone-20261013",
+      "date": "2026-10-13",
+      "category": "media",
+      "category_label": "언론 보도",
+      "category_label_en": "Media coverage",
+      "outlet": "뉴스프리존",
+      "outlet_en": "News Freezone",
+      "priority": 0,
+      "title": "고려대 학부생 연구팀, 소리로 물체 띄우는 시간 2900배 단축",
+      "title_en": "Korea University undergraduate team cuts acoustic levitation computation time by 2,900 times",
+      "summary": "음향으로 물체를 제어하기 위한 계산을 빠르게 수행하는 연구를 보도했습니다.",
+      "summary_en": "Coverage of research into faster computation for controlling objects with sound.",
+      "body": [
+        "고려대·아주대 학부생 공동연구팀이 진행한 음향 제어 계산 연구와 국제학술지 Results in Engineering에 게재된 논문을 소개한 기사입니다."
+      ],
+      "body_en": [
+        "The article covers acoustic control computation by the undergraduate team from Korea University and Ajou University, and their paper published in Results in Engineering."
+      ],
+      "url": "https://www.newsfreezone.co.kr/news/articleView.html?idxno=713510",
+      "project": "acoustic-optimization",
+      "visibility": "public"
+    },
+    {
+      "id": "media-newstnt-20261012",
+      "date": "2026-10-12",
+      "category": "media",
+      "category_label": "언론 보도",
+      "category_label_en": "Media coverage",
+      "outlet": "뉴스티앤티",
+      "outlet_en": "News TNT",
+      "priority": 0,
+      "title": "고려대 학부생 연구팀, 음파 부상 기술 계산시간 29초→0.01초로 2900배 단축",
+      "title_en": "Korea University undergraduate team cuts acoustic levitation computation time from 29 seconds to 0.01 seconds",
+      "summary": "음향 부양 제어를 위한 계산 방법과 학부생 연구팀의 성과를 소개했습니다.",
+      "summary_en": "Coverage of acoustic levitation computation and the undergraduate research team’s results.",
+      "body": [
+        "고려대·아주대 학부생 공동연구팀이 진행한 음향 제어 계산 연구와 국제학술지 Results in Engineering에 게재된 논문을 소개한 기사입니다."
+      ],
+      "body_en": [
+        "The article covers acoustic control computation by the undergraduate team from Korea University and Ajou University, and their paper published in Results in Engineering."
+      ],
+      "url": "https://www.newstnt.com/news/articleView.html?idxno=722411",
+      "project": "acoustic-optimization",
+      "visibility": "public"
+    },
+    {
+      "id": "media-usline-20261012",
+      "date": "2026-10-12",
+      "category": "media",
+      "category_label": "언론 보도",
+      "category_label_en": "Media coverage",
+      "outlet": "데일리 유스라인",
+      "outlet_en": "U’s Line",
+      "priority": 0,
+      "title": "고려대 학부생 연구팀, 소리로 물체 붙잡는 계산 시간 2,900배 단축",
+      "title_en": "Korea University undergraduate team cuts acoustic trapping computation time by 2,900 times",
+      "summary": "학부생 연구팀의 음향 집게 제어 계산 연구와 논문 게재 소식을 전했습니다.",
+      "summary_en": "Coverage of the undergraduate team’s acoustic tweezer control research and journal publication.",
+      "body": [
+        "고려대·아주대 학부생 공동연구팀이 진행한 음향 제어 계산 연구와 국제학술지 Results in Engineering에 게재된 논문을 소개한 기사입니다."
+      ],
+      "body_en": [
+        "The article covers acoustic control computation by the undergraduate team from Korea University and Ajou University, and their paper published in Results in Engineering."
+      ],
+      "url": "https://www.usline.kr/news/articleView.html?idxno=35016",
+      "project": "acoustic-optimization",
+      "visibility": "public"
+    },
+    {
+      "id": "media-nursenews-20261012",
+      "date": "2026-10-12",
+      "category": "media",
+      "category_label": "언론 보도",
+      "category_label_en": "Media coverage",
+      "outlet": "간호사신문",
+      "outlet_en": "Nurse News",
+      "priority": 0,
+      "title": "대학생 연구팀, ‘음향 집게’ 계산 속도 2900배 줄였다",
+      "title_en": "University student team cuts acoustic tweezer computation time by 2,900 times",
+      "summary": "음향 집게 최적화 연구와 의료 분야에서의 활용 가능성을 소개했습니다.",
+      "summary_en": "Coverage of acoustic tweezer optimization and potential applications in medicine.",
+      "body": [
+        "고려대·아주대 학부생 공동연구팀이 진행한 음향 제어 계산 연구와 국제학술지 Results in Engineering에 게재된 논문을 소개한 기사입니다."
+      ],
+      "body_en": [
+        "The article covers acoustic control computation by the undergraduate team from Korea University and Ajou University, and their paper published in Results in Engineering."
+      ],
+      "url": "https://www.nursenews.co.kr/news/articleView.html?idxno=45003",
+      "project": "acoustic-optimization",
+      "visibility": "public"
+    },
+    {
+      "id": "media-popcornnews-20261012",
+      "date": "2026-10-12",
+      "category": "media",
+      "category_label": "언론 보도",
+      "category_label_en": "Media coverage",
+      "outlet": "팝콘뉴스",
+      "outlet_en": "Popcorn News",
+      "priority": 0,
+      "title": "고려대 학부생 연구팀, 소리로 물체 붙잡는 계산 시간 2천900배 단축",
+      "title_en": "Korea University undergraduate team cuts acoustic trapping computation time by 2,900 times",
+      "summary": "소리로 물체를 붙잡는 제어 계산을 개선한 학부생 연구팀의 성과를 보도했습니다.",
+      "summary_en": "Coverage of the undergraduate team’s improvements to acoustic trapping calculations.",
+      "body": [
+        "고려대·아주대 학부생 공동연구팀이 진행한 음향 제어 계산 연구와 국제학술지 Results in Engineering에 게재된 논문을 소개한 기사입니다."
+      ],
+      "body_en": [
+        "The article covers acoustic control computation by the undergraduate team from Korea University and Ajou University, and their paper published in Results in Engineering."
+      ],
+      "url": "https://www.popcornnews.net/news/articleView.html?idxno=135649",
+      "project": "acoustic-optimization",
+      "visibility": "public"
+    },
+    {
+      "id": "media-todaykorea-20261012",
+      "date": "2026-10-12",
+      "category": "media",
+      "category_label": "언론 보도",
+      "category_label_en": "Media coverage",
+      "outlet": "투데이코리아",
+      "outlet_en": "Today Korea",
+      "priority": 0,
+      "title": "고려대 학부생 연구팀, 소리로 물체 붙잡는 계산 시간 2900배 단축",
+      "title_en": "Korea University undergraduate team cuts acoustic trapping computation time by 2,900 times",
+      "summary": "고려대·아주대 학부생 공동연구팀의 음향 홀로그래피 최적화 연구를 소개했습니다.",
+      "summary_en": "Coverage of acoustic holography optimization by the undergraduate research team.",
+      "body": [
+        "고려대·아주대 학부생 공동연구팀이 진행한 음향 제어 계산 연구와 국제학술지 Results in Engineering에 게재된 논문을 소개한 기사입니다."
+      ],
+      "body_en": [
+        "The article covers acoustic control computation by the undergraduate team from Korea University and Ajou University, and their paper published in Results in Engineering."
+      ],
+      "url": "https://www.todaykorea.co.kr/news/articleView.html?idxno=407030",
+      "project": "acoustic-optimization",
+      "visibility": "public"
+    },
+    {
+      "id": "media-enewstoday-20261012",
+      "date": "2026-10-12",
+      "category": "media",
+      "category_label": "언론 보도",
+      "category_label_en": "Media coverage",
+      "outlet": "이뉴스투데이",
+      "outlet_en": "E News Today",
+      "priority": 0,
+      "title": "[고려대 소식] 고려대, 생애주기 아우르는 융합연구 본격화 외",
+      "title_en": "[Korea University news] Interdisciplinary research across the life cycle and other updates",
+      "summary": "고려대 소식을 묶은 기사에서 학부생 공동연구팀의 음향 집게 최적화 연구를 소개했습니다.",
+      "summary_en": "A Korea University news roundup includes the undergraduate team’s acoustic tweezer optimization research.",
+      "body": [
+        "여러 고려대 소식을 다룬 기사입니다. 본문 후반의 음향 집게 연구 항목에서 학부생 공동연구팀의 계산 방법과 논문 게재 소식을 확인할 수 있습니다."
+      ],
+      "body_en": [
+        "This campus news roundup includes a later section on the undergraduate team’s acoustic tweezer computation and journal publication."
+      ],
+      "url": "https://www.enewstoday.co.kr/news/articleView.html?idxno=2478880",
+      "project": "acoustic-optimization",
+      "visibility": "public"
+    },
+    {
+      "id": "media-newsedu-20261012",
+      "date": "2026-10-12",
+      "category": "media",
+      "category_label": "언론 보도",
+      "category_label_en": "Media coverage",
+      "outlet": "참교육뉴스",
+      "outlet_en": "Cham Education News",
+      "priority": 0,
+      "title": "고려대 학부생 연구팀, 소리로 물체 붙잡는 계산 시간 2,900배 단축",
+      "title_en": "Korea University undergraduate team cuts acoustic trapping computation time by 2,900 times",
+      "summary": "학부생 공동연구팀의 음향 제어 계산 연구와 국제학술지 게재를 보도했습니다.",
+      "summary_en": "Coverage of the undergraduate team’s acoustic control research and international journal publication.",
+      "body": [
+        "고려대·아주대 학부생 공동연구팀이 진행한 음향 제어 계산 연구와 국제학술지 Results in Engineering에 게재된 논문을 소개한 기사입니다."
+      ],
+      "body_en": [
+        "The article covers acoustic control computation by the undergraduate team from Korea University and Ajou University, and their paper published in Results in Engineering."
+      ],
+      "url": "https://www.newsedu.kr/news/articleView.html?idxno=49533",
+      "project": "acoustic-optimization",
+      "visibility": "public"
+    },
+    {
+      "id": "media-baekwoonmedia-20261012",
+      "date": "2026-10-12",
+      "category": "media",
+      "category_label": "언론 보도",
+      "category_label_en": "Media coverage",
+      "outlet": "백운미디어",
+      "outlet_en": "Baekwoon Media",
+      "priority": 0,
+      "title": "고려대 학부생 연구팀, 초음파 물체 제어 계산 속도 2900배 높였다",
+      "title_en": "Korea University undergraduate team speeds up ultrasound control computation by 2,900 times",
+      "summary": "초음파를 이용한 물체 제어 계산과 학부생 연구팀의 최적화 성과를 소개했습니다.",
+      "summary_en": "Coverage of ultrasound control calculations and the undergraduate team’s optimization results.",
+      "body": [
+        "고려대·아주대 학부생 공동연구팀이 진행한 음향 제어 계산 연구와 국제학술지 Results in Engineering에 게재된 논문을 소개한 기사입니다."
+      ],
+      "body_en": [
+        "The article covers acoustic control computation by the undergraduate team from Korea University and Ajou University, and their paper published in Results in Engineering."
+      ],
+      "url": "https://www.cloudbaekmc.com/news/article.html?no=23968",
+      "project": "acoustic-optimization",
+      "visibility": "public"
+    },
+    {
+      "id": "media-joongang-20261013",
+      "date": "2026-10-13",
+      "category": "media",
+      "category_label": "언론 보도",
+      "category_label_en": "Media coverage",
+      "outlet": "중앙일보",
+      "outlet_en": "JoongAng Ilbo",
+      "priority": 100,
+      "title": "고려대 학부생 연구팀, 음향 트랩 계산시간 29초→0.01초 단축",
+      "title_en": "Korea University undergraduate team cuts acoustic trap computation from 29 seconds to 0.01 seconds",
+      "summary": "음향 트랩 제어 계산을 빠르게 수행한 학부생 공동연구팀의 성과를 소개했습니다.",
+      "summary_en": "Coverage of the undergraduate team’s research into faster acoustic trap control computation.",
+      "body": [
+        "고려대·아주대 학부생 공동연구팀이 진행한 음향 제어 계산 연구와 국제학술지 Results in Engineering에 게재된 논문을 소개한 기사입니다."
+      ],
+      "body_en": [
+        "The article covers acoustic control computation by the undergraduate team from Korea University and Ajou University, and their paper published in Results in Engineering."
+      ],
+      "url": "https://www.joongang.co.kr/article/25469333",
+      "project": "acoustic-optimization",
+      "visibility": "public"
+    },
+    {
+      "id": "media-koreadaily-20261012",
+      "date": "2026-10-12",
+      "category": "media",
+      "category_label": "언론 보도",
+      "category_label_en": "Media coverage",
+      "outlet": "미주중앙일보",
+      "outlet_en": "Korea Daily",
+      "priority": 50,
+      "title": "고려대 학부생 연구팀, 음향 트랩 계산시간 29초→0.01초 단축",
+      "title_en": "Korea University undergraduate team cuts acoustic trap computation from 29 seconds to 0.01 seconds",
+      "summary": "중앙일보 기사를 통해 학부생 공동연구팀의 음향 트랩 최적화 연구를 소개했습니다.",
+      "summary_en": "A syndicated JoongAng Ilbo article covers the undergraduate team’s acoustic trap optimization research.",
+      "body": [
+        "중앙일보 원문을 미주중앙일보에 게재한 기사입니다. 날짜는 매체에 표시된 현지 발행일을 기준으로 표기했습니다."
+      ],
+      "body_en": [
+        "This JoongAng Ilbo article was syndicated by Korea Daily. The date follows the publisher’s displayed local publication date."
+      ],
+      "url": "https://www.koreadaily.com/article/20261012234245481",
+      "project": "acoustic-optimization",
+      "visibility": "public"
+    },
+    {
+      "id": "media-ebiotrade-20261012",
+      "date": "2026-10-12",
+      "category": "media",
+      "category_label": "언론 보도",
+      "category_label_en": "Media coverage",
+      "outlet": "生物通 (BioTrade)",
+      "outlet_en": "eBiotrade",
+      "priority": 0,
+      "title": "홀로그래피 음향 집게의 실시간 최적화를 위한 목적함수 설계",
+      "title_en": "Objective design for real-time optimization in holographic acoustic tweezers",
+      "summary": "중국어 과학 매체에서 홀로그래피 음향 집게의 목적함수 설계와 최적화 방법을 해설했습니다.",
+      "summary_en": "A Chinese-language science article explains objective design and optimization for holographic acoustic tweezers.",
+      "body": [
+        "홀로그래피 음향 집게의 목적함수 설계와 계산 방법을 다룬 중국어 논문 해설입니다.",
+        "원문 제목: 面向全息声学镊实时优化的目标函数设计"
+      ],
+      "body_en": [
+        "This Chinese-language article explains objective design and computation for holographic acoustic tweezers.",
+        "Original title: 面向全息声学镊实时优化的目标函数设计"
+      ],
+      "url": "https://www.ebiotrade.com/newsf/2026-10/20261012000626724.htm",
+      "project": "acoustic-optimization",
+      "visibility": "public"
+    },
+    {
+      "id": "media-hankyoreh-20261013",
+      "date": "2026-10-13",
+      "category": "media",
+      "category_label": "언론 보도",
+      "category_label_en": "Media coverage",
+      "outlet": "한겨레",
+      "outlet_en": "The Hankyoreh",
+      "priority": 90,
+      "title": "고려대 학부생 연구팀, 소리로 물체 붙잡는 계산 시간 2,900배 단축",
+      "title_en": "Korea University undergraduate team cuts acoustic trapping computation time by 2,900 times",
+      "summary": "기업PR 섹션에서 학부생 공동연구팀의 음향 집게 최적화 연구를 소개했습니다.",
+      "summary_en": "An article in the business PR section introduces the undergraduate team’s acoustic tweezer optimization research.",
+      "body": [
+        "한겨레 경제면의 기업PR 섹션에 게재된 기사입니다. 학부생 공동연구팀의 음향 제어 계산 연구와 Results in Engineering 논문을 소개합니다."
+      ],
+      "body_en": [
+        "Published in The Hankyoreh’s business PR section, this article introduces the team’s acoustic control research and Results in Engineering paper."
+      ],
+      "url": "https://www.hani.co.kr/arti/economy/biznews/1282215.html",
+      "project": "acoustic-optimization",
+      "visibility": "public"
+    }
+  ],
   "history": [
     {
       "year": "2025",

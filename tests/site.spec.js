@@ -2,8 +2,12 @@ import { test, expect } from '@playwright/test';
 import { mkdir, readFile } from 'node:fs/promises';
 
 const content = JSON.parse(await readFile(new URL('../src/content.json', import.meta.url), 'utf8'));
+const publicProjects = content.projects.filter(project => project.visibility !== 'hidden');
+const researchRoutes = publicProjects.map(project => `/research/${project.id}`);
 const publicPublications = content.publications.filter(paper => paper.visibility !== 'hidden');
 const publicationRoutes = publicPublications.map(paper => `/publications/${paper.id}`);
+const publicNews = content.news.filter(item => item.visibility === 'public');
+const newsRoutes = publicNews.map(item => `/news/${item.id}`);
 
 const memberEmails = {
   'sungjun-choi': ['sjchol@inspatium.co', 'tonggyegang@korea.ac.kr'],
@@ -11,7 +15,7 @@ const memberEmails = {
   'yoonchae-kim': ['yonchaekim@inspatium.co', 'yonchaekim@ajou.ac.kr'],
   'yoonseo-gu': ['yunseo7560@inspatium.co', 'gys0821@korea.ac.kr'],
 };
-const pages = ['', '/philosophy', '/greeting', '/about', '/history', '/research', '/research/few-shot-inverse-design', '/research/embedded-physical-ai', '/research/holography-hardware', '/publications', ...publicationRoutes, '/team', ...Object.keys(memberEmails).map(id => `/team/${id}`), '/join', '/news', '/contact'];
+const pages = ['', '/philosophy', '/greeting', '/about', '/history', '/research', ...researchRoutes, '/publications', ...publicationRoutes, '/team', ...Object.keys(memberEmails).map(id => `/team/${id}`), '/join', '/news', ...newsRoutes, '/contact'];
 
 for (const lang of ['ko', 'en']) {
   test(`${lang}: all pages load without runtime errors or horizontal overflow`, async ({ page }) => {
@@ -22,6 +26,7 @@ for (const lang of ['ko', 'en']) {
       for (const route of pages) {
         await page.goto(`/${lang}${route}`);
         await expect(page.locator('h1')).toBeVisible();
+        await expect(page.locator('main')).not.toContainText('404');
         await expect(page.locator('html')).toHaveAttribute('lang', lang);
         await page.evaluate(() => document.fonts.ready);
         const overflow = await page.evaluate(() => document.documentElement.scrollWidth > window.innerWidth + 1);
@@ -120,7 +125,6 @@ test('research visibility controls links and direct routes while preserving othe
 });
 
 test('publication visibility controls listings, related links and direct routes while retaining the index', async ({ page }) => {
-  const publicProjects = content.projects.filter(project => project.visibility !== 'hidden');
   const incomingRoutes = ['', '/history', '/news', '/research', ...publicProjects.map(project => `/research/${project.id}`), '/team', ...Object.keys(memberEmails).map(id => `/team/${id}`)];
   const hiddenPapers = content.publications.filter(paper => paper.visibility === 'hidden');
   for (const lang of ['ko', 'en']) {
@@ -201,6 +205,81 @@ test('publication visibility controls listings, related links and direct routes 
     }
   }
 });
+
+for (const lang of ['ko', 'en']) {
+  test(`${lang}: media coverage lists all 19 sources with JoongAng first and accessible original links`, async ({ page }) => {
+    const mediaItems = publicNews.filter(item => item.category === 'media');
+    const leadId = 'media-joongang-20261013';
+    const lead = mediaItems.find(item => item.id === leadId);
+    const localized = (item, key) => lang === 'en' ? item[`${key}_en`] ?? item[key] : item[key];
+    expect(mediaItems).toHaveLength(19);
+    expect(lead).toBeDefined();
+    await page.goto(`/${lang}/news`);
+    const rows = page.locator('.news-list-item');
+    const assertLead = async () => {
+      await expect(rows.first().locator('h2 a')).toHaveAttribute('href', `/${lang}/news/${leadId}`);
+      await expect(rows.first().locator('.news-item-meta')).toContainText(localized(lead, 'outlet'));
+    };
+    await expect(page.getByRole('button', { name: lang === 'ko' ? '전체' : 'All', exact: true })).toHaveAttribute('aria-pressed', 'true');
+    await expect(rows).toHaveCount(publicNews.length);
+    await assertLead();
+    await page.getByRole('button', { name: lang === 'ko' ? '언론 보도' : 'Media', exact: true }).click();
+    await expect(page.getByRole('button', { name: lang === 'ko' ? '언론 보도' : 'Media', exact: true })).toHaveAttribute('aria-pressed', 'true');
+    await expect(rows).toHaveCount(19);
+    await assertLead();
+    for (const item of mediaItems) {
+      const row = rows.filter({ has: page.locator(`h2 a[href="/${lang}/news/${item.id}"]`) });
+      await expect(row).toHaveCount(1);
+      await expect(row.locator('h2')).toHaveText(localized(item, 'title'));
+      await expect(row.locator('p')).toHaveText(localized(item, 'summary'));
+      await expect(row.locator('.news-item-meta')).toContainText(localized(item, 'outlet'));
+      if (item.date) {
+        await expect(row.locator('time')).toHaveAttribute('datetime', item.date);
+        await expect(row.locator('time')).toHaveText(item.date);
+      } else {
+        await expect(row.locator('time')).toHaveCount(0);
+      }
+    }
+    await page.getByRole('button', { name: lang === 'ko' ? '연구 소식' : 'Research', exact: true }).click();
+    await expect(page.getByRole('button', { name: lang === 'ko' ? '연구 소식' : 'Research', exact: true })).toHaveAttribute('aria-pressed', 'true');
+    await expect(rows).toHaveCount(0);
+    await expect(page.locator('.inner-news-empty h2')).toHaveText(lang === 'ko' ? '해당 분류의 소식이 없습니다.' : 'There are no updates in this category.');
+    await page.getByRole('button', { name: lang === 'ko' ? '전체' : 'All', exact: true }).click();
+    await expect(rows).toHaveCount(publicNews.length);
+    await assertLead();
+
+    for (const item of mediaItems) {
+      await page.goto(`/${lang}/news/${item.id}`);
+      await expect(page.locator('h1')).toHaveText(localized(item, 'title'));
+      await expect(page).toHaveTitle(`${localized(item, 'title')} | INSPATIUM`);
+      await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', `${localized(item, 'title')} | INSPATIUM`);
+      for (const selector of ['meta[name="description"]', 'meta[property="og:description"]']) {
+        await expect(page.locator(selector)).toHaveAttribute('content', localized(item, 'summary'));
+      }
+      await expect(page.locator('.news-detail .eyebrow')).toContainText(localized(item, 'outlet'));
+      if (item.date) await expect(page.locator('.news-detail .eyebrow')).toContainText(item.date);
+      const original = page.locator('.news-detail').getByRole('link', { name: lang === 'ko' ? '원문 보기' : 'Read original', exact: true });
+      await expect(original).toHaveAttribute('href', item.url);
+      await expect(original).toHaveAttribute('target', '_blank');
+      await expect(original).toHaveAttribute('rel', 'noopener noreferrer');
+      await expect(page.locator(`.news-detail .project-band a[href="/${lang}/research/acoustic-optimization"]`)).toBeVisible();
+    }
+
+    const detailPath = `/${lang}/news/${leadId}?source=refresh`;
+    await page.goto(detailPath);
+    await page.reload();
+    await expect(page).toHaveURL(detailPath);
+    await expect(page.locator('html')).toHaveAttribute('lang', lang);
+    await expect(page.locator('h1')).toHaveText(localized(lead, 'title'));
+    for (const paragraph of localized(lead, 'body')) await expect(page.locator('.news-detail')).toContainText(paragraph);
+    await expect(page.locator('.news-detail .eyebrow')).toContainText(localized(lead, 'outlet'));
+    if (lead.date) await expect(page.locator('.news-detail .eyebrow')).toContainText(lead.date);
+    await expect(page.locator('.news-detail a[target="_blank"]')).toHaveAttribute('href', lead.url);
+    await page.getByRole('link', { name: lang === 'ko' ? 'Switch to English' : '한국어로 전환' }).click();
+    await expect(page).toHaveURL(`/${lang === 'ko' ? 'en' : 'ko'}/news/${leadId}?source=refresh`);
+    await expect(page.locator('h1')).toHaveText(lang === 'ko' ? lead.title_en : lead.title);
+  });
+}
 
 test('desktop about dropdown, mobile menu and news filtering are operable', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });

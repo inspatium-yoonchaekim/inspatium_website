@@ -224,7 +224,7 @@
   .inner-news-empty h2 { font-size: 23px; }
   .inner-news-empty p { font-size: 15px; }
   .news-list-item { grid-template-columns: 1fr; gap: 19px; padding: 28px 0; }
-  .news-item-meta { flex-direction: row; gap: 16px; }
+  .news-item-meta { flex-direction: row; flex-wrap: wrap; gap: 10px 16px; }
   .news-list-item h2 { font-size: 24px; }
   .join-page-grid .inner-prose h2, .contact-page-grid > article > h2 { font-size: 30px; }
   .inner-contact-panel { padding: 28px; }

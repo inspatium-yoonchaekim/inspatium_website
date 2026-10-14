@@ -92,10 +92,11 @@ export default function App() {
     const field = key => lang === 'en' ? `${key}_en` : key;
     const project = page === 'research' && data.projects.find(item => item.id === id);
     const paper = page === 'publications' && data.publications.find(item => item.id === id);
+    const news = page === 'news' && data.news.find(item => item.id === id);
     const person = page === 'team' && data.people.find(item => item.id === id);
-    const title = person?.[field('name')] || (project || paper)?.[field('title')] || titles[page]?.[lang === 'ko' ? 0 : 1] || (lang === 'ko' ? '페이지를 찾을 수 없습니다' : 'Page not found');
+    const title = person?.[field('name')] || (project || paper || news)?.[field('title')] || titles[page]?.[lang === 'ko' ? 0 : 1] || (lang === 'ko' ? '페이지를 찾을 수 없습니다' : 'Page not found');
     document.title = `${title} | INSPATIUM`;
-    const description = project?.[field('summary')] || (lang === 'ko' ? '인스파티움은 수학과 물리학을 바탕으로 지능적 역설계 AI와 피지컬 AI 제어 기술을 연구합니다.' : 'Inspatium researches intelligent inverse design and physical AI, grounded in mathematics and physics.');
+    const description = (project || news)?.[field('summary')] || (lang === 'ko' ? '인스파티움은 수학과 물리학을 바탕으로 지능적 역설계 AI와 피지컬 AI 제어 기술을 연구합니다.' : 'Inspatium researches intelligent inverse design and physical AI, grounded in mathematics and physics.');
     document.querySelector('meta[name="description"]')?.setAttribute('content', description);
     document.querySelector('meta[property="og:title"]')?.setAttribute('content', document.title);
     document.querySelector('meta[property="og:description"]')?.setAttribute('content', description);
