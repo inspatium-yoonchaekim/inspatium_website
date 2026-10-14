@@ -87,10 +87,17 @@
 .publication-detail > .inner-prose { max-width: 870px; }
 .inner-prose .publication-detail-title { font-size: 32px; line-height: 1.5; margin: 20px 0 18px; }
 .paper-status { display: flex; align-items: center; gap: 14px; margin: 0 0 40px; font-size: 14px; color: var(--muted); }
+.publication-bibliography { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 28px; margin: 0 0 36px; padding: 22px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.publication-bibliography > div { min-width: 0; }
+.publication-bibliography dt { color: var(--muted); font-size: 14px; }
+.publication-bibliography dd { margin: 8px 0 0; font-size: 16px; }
+.publication-bibliography a { text-decoration: underline; text-underline-offset: 3px; }
 .publication-resources { border: 1px solid var(--line); background: #fff; padding: 25px 28px; margin-top: 35px; }
 .publication-resources h3 { margin: 0 0 14px; }
 .publication-resources ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 10px 28px; }
 .publication-resources li { color: var(--muted); font-size: 15px; line-height: 1.8; }
+.publication-resources .text-link { max-width: 100%; font-size: 16px; }
+.publication-resources .text-link > span { min-width: 0; overflow-wrap: anywhere; }
 .project-band { padding: 24px 0 0; margin-top: 26px; border-top: 1px solid var(--line); }
 .team-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 48px; }
 .team-single { max-width: 860px; grid-template-columns: 1fr; }
@@ -210,7 +217,7 @@
   .publication-year { font-size: 21px; }
   .publication-row h2 { font-size: 23px; }
   .inner-prose .publication-detail-title { font-size: 26px; }
-  .publication-resources { padding: 21px; }
+  .publication-resources { padding: 22px 16px; }
   .publication-resources ul { flex-direction: column; gap: 10px; }
   .team-card { padding: 25px 0; }
   .team-card-heading { gap: 19px; }

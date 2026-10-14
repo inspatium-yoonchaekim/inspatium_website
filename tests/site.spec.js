@@ -129,6 +129,14 @@ test('publication visibility controls listings, related links and direct routes 
   const hiddenPapers = content.publications.filter(paper => paper.visibility === 'hidden');
   for (const lang of ['ko', 'en']) {
     const localized = (item, key) => lang === 'en' ? item[`${key}_en`] ?? item[key] : item[key];
+    const authors = paper => paper.authors?.length ? paper.authors.map(author => localized(author, 'name')).join(' · ') : localized(paper, 'author_note');
+    const assertPublicationRow = async (row, paper) => {
+      await expect(row.locator('.publication-author-note')).toHaveText(authors(paper));
+      await expect(row.locator('.publication-meta .status-label')).toHaveText(localized(paper, 'status'));
+      if (paper.authors?.length) {
+        await expect(row).not.toContainText(lang === 'ko' ? '전체 저자 표기 등록 예정' : 'Full author list to be added');
+      }
+    };
     const indexPath = `/${lang}/publications`;
     for (const width of [1440, 390]) {
       await page.setViewportSize({ width, height: 900 });
@@ -151,6 +159,8 @@ test('publication visibility controls listings, related links and direct routes 
         } else {
           await expect(link).toHaveText(localized(paper, 'title'));
           await expect(link).toBeVisible();
+          const row = page.locator('.publication-row').filter({ has: page.locator(`h2 a[href="${indexPath}/${paper.id}"]`) });
+          await assertPublicationRow(row, paper);
         }
       }
     }
@@ -164,7 +174,10 @@ test('publication visibility controls listings, related links and direct routes 
       if (project) {
         const linkedPaper = publicPublications.find(paper => paper.id === project.publication);
         await expect(page.locator('.related-publication')).toHaveCount(linkedPaper ? 1 : 0);
-        if (linkedPaper) await expect(page.locator(`.related-publication a[href="${indexPath}/${linkedPaper.id}"]`).first()).toBeVisible();
+        if (linkedPaper) {
+          await expect(page.locator(`.related-publication a[href="${indexPath}/${linkedPaper.id}"]`).first()).toBeVisible();
+          await assertPublicationRow(page.locator('.related-publication .publication-row'), linkedPaper);
+        }
       }
     }
 
@@ -185,13 +198,54 @@ test('publication visibility controls listings, related links and direct routes 
         } else {
           await expect(page.locator('.publication-detail-title')).toHaveText(paperTitle);
           await expect(page.locator('.publication-detail')).toContainText(paper.venue);
+          await expect(page.locator('.publication-detail').getByText(authors(paper), { exact: true })).toBeVisible();
+          if (paper.authors?.length) {
+            await expect(page.locator('.publication-detail')).not.toContainText(lang === 'ko' ? '전체 저자 표기 등록 예정' : 'Full author list to be added');
+          }
+          await expect(page.locator('.paper-status .status-label')).toHaveText(localized(paper, 'status'));
           await expect(page.locator('.paper-status')).toContainText(paper.date);
           await expect(page).toHaveTitle(`${paperTitle} | INSPATIUM`);
           await expect(page.locator('meta[property="og:title"]')).toHaveAttribute('content', `${paperTitle} | INSPATIUM`);
           const project = publicProjects.find(item => item.id === paper.project);
           await expect(page.locator('.project-band')).toHaveCount(project ? 1 : 0);
           if (project) await expect(page.locator(`.project-band a[href="/${lang}/research/${project.id}"]`)).toBeVisible();
-          if (paper.public_release === false) await expect(page.locator('.publication-resources a')).toHaveCount(0);
+          const resources = page.locator('.publication-resources');
+          if (paper.public_release === false) {
+            await expect(resources.locator('a')).toHaveCount(0);
+          } else if (paper.public_release) {
+            const doiUrl = paper.doi && (paper.doi.startsWith('http') ? paper.doi : `https://doi.org/${paper.doi}`);
+            const resourceLinks = [
+              [lang === 'ko' ? '학술지에서 보기' : 'View at publisher', paper.url],
+              [/^DOI(?::|$)/, doiUrl],
+              [lang === 'ko' ? '코드와 데이터' : 'Code and data', paper.code_url],
+            ];
+            await expect(resources.locator('a')).toHaveCount(resourceLinks.filter(([, url]) => url).length);
+            for (const [label, url] of resourceLinks) {
+              const link = resources.getByRole('link', { name: label, exact: true });
+              if (url) {
+                await expect(link).toHaveAttribute('href', url);
+                await expect(link).toHaveAttribute('target', '_blank');
+                await expect(link).toHaveAttribute('rel', 'noopener noreferrer');
+                if (label instanceof RegExp) await expect(link).toContainText(paper.doi.replace(/^https?:\/\/(?:dx\.)?doi\.org\//i, ''));
+              } else {
+                await expect(link).toHaveCount(0);
+              }
+            }
+            if (paper.url) await expect(resources).not.toContainText(lang === 'ko' ? '논문 공개 링크 준비 중' : 'Publication link to be added');
+            if (paper.doi) await expect(resources).not.toContainText(lang === 'ko' ? 'DOI 등록 예정' : 'DOI to be added');
+            await expect(resources).not.toContainText(lang === 'ko' ? '코드·데이터 공개 정보 준비 중' : 'Code and data information to be added');
+          }
+          if (paper.article_number) await expect(page.locator('.publication-bibliography')).toContainText(paper.article_number);
+          if (paper.open_access) await expect(page.locator('.publication-bibliography')).toContainText(lang === 'ko' ? '오픈 액세스' : 'Open access');
+          if (paper.license) await expect(page.locator('.publication-bibliography')).toContainText(paper.license);
+          if (paper.license_url && paper.public_release === true) {
+            const license = page.locator('.publication-bibliography').getByRole('link', { name: paper.license, exact: true });
+            await expect(license).toHaveAttribute('href', paper.license_url);
+            await expect(license).toHaveAttribute('target', '_blank');
+            await expect(license).toHaveAttribute('rel', 'noopener noreferrer');
+          } else if (paper.license_url) {
+            await expect(page.locator('.publication-bibliography a')).toHaveCount(0);
+          }
         }
       };
       const paperPath = `${indexPath}/${paper.id}`;

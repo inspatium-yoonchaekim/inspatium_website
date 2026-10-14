@@ -212,17 +212,32 @@
       "original_title": "Objective design for real-time optimization in holographic acoustic tweezers",
       "venue": "Results in Engineering",
       "year": "2026",
-      "status": "게재 승인",
-      "status_en": "Accepted",
-      "date": "2026-09-29",
-      "authors": [],
-      "author_note": "최성준 외 · 전체 저자 표기 등록 예정",
-      "author_note_en": "SungJun Choi et al. · Full author list to be added",
+      "status": "온라인 게재",
+      "status_en": "Published online",
+      "date": "2026-10-11",
+      "article_number": "113286",
+      "open_access": true,
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "authors": [
+        {
+          "name": "최성준",
+          "name_en": "SungJun Choi"
+        },
+        {
+          "name": "구윤서",
+          "name_en": "Yoonseo Gu"
+        },
+        {
+          "name": "김윤채",
+          "name_en": "Yoonchae Kim"
+        }
+      ],
       "project": "acoustic-optimization",
-      "doi": "",
-      "url": "",
+      "doi": "10.1016/j.rineng.2026.113286",
+      "url": "https://www.sciencedirect.com/science/article/pii/S2590123026042970",
       "code_url": "",
-      "public_release": false
+      "public_release": true
     }
   ],
   "news": [
